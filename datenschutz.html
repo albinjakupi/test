@@ -11,6 +11,8 @@
 <meta property="og:description" content="Datenschutzerklärung von Cleeno Reinigungen: Welche Daten beim Besuch der Website und bei Offertanfragen bearbeitet werden und welche Rechte Sie haben.">
 <meta property="og:locale" content="de_CH">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/outfit-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/source-sans-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,12 +22,8 @@
   <div class="container">
     <nav class="nav" aria-label="Hauptnavigation">
       <a class="logo" href="index.html">
-        <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-          <rect width="40" height="40" rx="11" fill="#0f766e"/>
-          <path d="M20 9c4.2 4.6 6.6 8 6.6 11.2A6.6 6.6 0 0 1 20 27a6.6 6.6 0 0 1-6.6-6.8C13.4 17 15.8 13.6 20 9Z" fill="#fff" opacity=".95"/>
-          <circle cx="28.6" cy="12.4" r="2.2" fill="#f4a259"/>
-        </svg>
-        <span>Cleeno<span class="logo__sub">Reinigungen</span></span>
+        <img src="assets/logo.svg" alt="Cleeno Reinigungen" width="124" height="28">
+        <span class="logo__sub">Reinigungen</span>
       </a>
 
       <div class="nav__menu">
@@ -38,11 +36,11 @@
       </div>
 
       <div class="nav__actions">
-        <a class="nav__phone" href="tel:+41441234567">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h3l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg>
-          044 123 45 67
+        <a class="nav__phone" href="tel:+41411234567">
+          <small>Direkt anrufen</small>
+          041 123 45 67
         </a>
-        <a class="btn btn--primary btn--sm" href="kontakt.html">Kostenlose Offerte</a>
+        <a class="btn btn--grad btn--sm" href="kontakt.html">Kostenlose Offerte</a>
       </div>
 
       <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
@@ -65,7 +63,7 @@
         <li><a href="ueber-uns.html">Über uns</a></li>
         <li><a href="kontakt.html">Kontakt</a></li>
       </ul>
-      <a class="btn btn--primary" href="kontakt.html">Kostenlose Offerte anfordern</a>
+      <a class="btn btn--grad btn--block" href="kontakt.html">Kostenlose Offerte anfordern</a>
     </div>
   </div>
 </header>
@@ -88,9 +86,9 @@
     <div class="container prose">
       <h2 class="mt-0">1. Verantwortliche Stelle</h2>
       <p>
-        Cleeno Reinigungen, Musterstrasse 12, 8005 Zürich<br>
+        Cleeno Reinigungen, Am Kanal 30, 6035 Perlen<br>
         E-Mail: <a href="mailto:datenschutz@cleeno-reinigungen.ch">datenschutz@cleeno-reinigungen.ch</a><br>
-        Telefon: <a href="tel:+41441234567">044 123 45 67</a>
+        Telefon: <a href="tel:+41411234567">041 123 45 67</a>
       </p>
       <p>Wir bearbeiten Personendaten im Einklang mit dem Schweizer Bundesgesetz über den Datenschutz (DSG) sowie – soweit anwendbar – der Datenschutz-Grundverordnung der EU (DSGVO).</p>
 
@@ -108,12 +106,12 @@
       <p>Wenn Sie uns über das Formular oder per E-Mail kontaktieren, bearbeiten wir die von Ihnen angegebenen Daten (Name, Firma, E-Mail-Adresse, Telefonnummer, Angaben zum Objekt und Ihre Nachricht) zur Beantwortung Ihrer Anfrage und zur Erstellung einer Offerte.</p>
       <p>Rechtsgrundlage ist die Anbahnung beziehungsweise Erfüllung eines Vertrags sowie unser berechtigtes Interesse an der Beantwortung von Anfragen. Kommt kein Auftrag zustande, löschen wir die Anfragedaten nach zwölf Monaten. Bei einem Vertragsabschluss gelten die gesetzlichen Aufbewahrungsfristen von zehn Jahren.</p>
 
-      <h2>4. Cookies und Analyse</h2>
-      <p>Diese Website verwendet keine Tracking-Cookies und bindet keine Analyse- oder Werbedienste von Drittanbietern ein. Es werden ausschliesslich technisch notwendige Daten verarbeitet, die für die Auslieferung der Seiten erforderlich sind.</p>
-      <p class="muted">Sollten später Dienste wie Google Analytics, Google Maps, ein Schriftarten-Dienst oder ein Bewertungs-Widget eingebunden werden, muss dieser Abschnitt entsprechend ergänzt werden.</p>
+      <h2>4. Cookies, Schriften und Analyse</h2>
+      <p>Diese Website verwendet keine Tracking-Cookies und bindet keine Analyse- oder Werbedienste von Drittanbietern ein. Auch die Schriften werden von unserem eigenen Server geladen – es entsteht also keine Verbindung zu externen Anbietern. Verarbeitet werden ausschliesslich technisch notwendige Daten.</p>
+      <p class="muted">Sollten später Dienste wie Google Analytics, Google Maps oder ein Bewertungs-Widget eingebunden werden, muss dieser Abschnitt entsprechend ergänzt werden.</p>
 
       <h2>5. Weitergabe von Daten</h2>
-      <p>Ihre Daten werden nicht verkauft. Eine Weitergabe erfolgt nur, soweit dies zur Vertragserfüllung notwendig ist (etwa an unser Treuhandbüro für die Rechnungsstellung oder an den Hosting-Anbieter als Auftragsbearbeiter) oder wir gesetzlich dazu verpflichtet sind. Alle Auftragsbearbeiter sind vertraglich zur Vertraulichkeit verpflichtet.</p>
+      <p>Ihre Daten werden nicht verkauft. Eine Weitergabe erfolgt nur, soweit dies zur Vertragserfüllung notwendig ist (etwa an das Treuhandbüro für die Rechnungsstellung oder an den Hosting-Anbieter als Auftragsbearbeiter) oder wir gesetzlich dazu verpflichtet sind. Alle Auftragsbearbeiter sind vertraglich zur Vertraulichkeit verpflichtet.</p>
 
       <h2>6. Datensicherheit</h2>
       <p>Die Website wird über eine verschlüsselte TLS-Verbindung (HTTPS) ausgeliefert. Wir treffen angemessene technische und organisatorische Massnahmen, um Ihre Daten gegen Verlust, Missbrauch und unberechtigten Zugriff zu schützen.</p>
@@ -125,7 +123,7 @@
       <h2>8. Änderungen</h2>
       <p>Wir können diese Datenschutzerklärung jederzeit anpassen. Massgebend ist die jeweils auf dieser Seite veröffentlichte Fassung.</p>
 
-      <p class="muted mt-40">Hinweis für die Redaktion: Dieser Text ist eine Vorlage und ersetzt keine Rechtsberatung. Er muss an die tatsächlich eingesetzten Dienste (Hosting, Formularversand, Karten, Analyse) angepasst und vor der Veröffentlichung geprüft werden.</p>
+      <p class="muted mt-40">Hinweis für die Redaktion: Dieser Text ist eine Vorlage und ersetzt keine Rechtsberatung. Er muss an die tatsächlich eingesetzten Dienste (Hosting, Formularversand, Karten) angepasst und vor der Veröffentlichung geprüft werden.</p>
     </div>
   </section>
 
@@ -137,14 +135,10 @@
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="logo" href="index.html">
-          <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-            <rect width="40" height="40" rx="11" fill="#0d9488"/>
-            <path d="M20 9c4.2 4.6 6.6 8 6.6 11.2A6.6 6.6 0 0 1 20 27a6.6 6.6 0 0 1-6.6-6.8C13.4 17 15.8 13.6 20 9Z" fill="#fff" opacity=".95"/>
-            <circle cx="28.6" cy="12.4" r="2.2" fill="#f4a259"/>
-          </svg>
-          <span>Cleeno<span class="logo__sub">Reinigungen</span></span>
+          <img src="assets/logo.svg" alt="Cleeno Reinigungen" width="140" height="32">
+          <span class="logo__sub">Reinigungen</span>
         </a>
-        <p>Ihre Reinigungsfirma für Zürich und Umgebung. Privat, Gewerbe und Liegenschaften – zuverlässig seit 2013.</p>
+        <p>Familienbetrieb für Reinigung in Perlen, Luzern und Zug. Privat, Gewerbe und Liegenschaften – mit Festpreis und Abnahmegarantie.</p>
       </div>
 
       <div>
@@ -173,10 +167,10 @@
       <div>
         <h3>Kontakt</h3>
         <ul>
-          <li>Musterstrasse 12<br>8005 Zürich</li>
-          <li><a href="tel:+41441234567">044 123 45 67</a></li>
+          <li>Am Kanal 30<br>6035 Perlen</li>
+          <li><a href="tel:+41411234567">041 123 45 67</a></li>
           <li><a href="mailto:offerte@cleeno-reinigungen.ch">offerte@cleeno-reinigungen.ch</a></li>
-          <li>Mo–Fr 07:00–18:00 Uhr</li>
+          <li>Mo–Fr 07:00–18:00 Uhr<br>Sa 08:00–12:00 Uhr</li>
         </ul>
       </div>
     </div>
@@ -190,6 +184,14 @@
     </div>
   </div>
 </footer>
+
+<div class="mobile-cta">
+  <a class="btn btn--ghost" href="tel:+41411234567">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h3l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg>
+    Anrufen
+  </a>
+  <a class="btn btn--grad" href="kontakt.html">Offerte anfordern</a>
+</div>
 
 <script src="js/main.js" defer></script>
 </body>

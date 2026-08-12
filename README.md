@@ -1,14 +1,15 @@
 # Website Cleeno Reinigungen
 
-Statische Website für eine Reinigungsfirma – reines HTML, CSS und JavaScript, ohne
-Build-Schritt, ohne Framework und ohne externe Abhängigkeiten (keine CDNs, keine
-Google Fonts, keine Tracker). Damit läuft die Seite auf jedem Webhosting und ist
-von Haus aus datenschutzfreundlich.
+Statische Website für den Reinigungsbetrieb Cleeno Reinigungen (Perlen LU) –
+reines HTML, CSS und JavaScript, ohne Build-Schritt, ohne Framework und ohne
+externe Abhängigkeiten. Schriften, Logo und Icons liegen im Projekt: Die Seite
+lädt nichts von fremden Servern, ist dadurch schnell und
+datenschutzfreundlich.
 
 ## Schnellstart
 
 Doppelklick auf `index.html` genügt zum Anschauen. Für ein realistischeres Bild
-(saubere Pfade, Formularverhalten) lokal einen kleinen Server starten:
+lokal einen kleinen Server starten:
 
 ```bash
 python3 -m http.server 8000
@@ -18,7 +19,8 @@ python3 -m http.server 8000
 ## Aufbau
 
 ```
-index.html                    Startseite (Hero, Leistungen, Ablauf, Referenzen, FAQ)
+index.html                    Startseite (Hero mit Schnellofferte, Leistungen,
+                              Garantien, Vergleich, Ablauf, Einsatzgebiet, FAQ)
 leistungen.html               Übersicht aller Leistungen inkl. Richtpreisen
 unterhaltsreinigung.html      Detailseite Leistung
 bueroreinigung.html           Detailseite Leistung
@@ -26,67 +28,91 @@ fensterreinigung.html         Detailseite Leistung
 umzugsreinigung.html          Detailseite Leistung (inkl. Preistabelle)
 bauendreinigung.html          Detailseite Leistung
 liegenschaftsreinigung.html   Detailseite Leistung
-ueber-uns.html                Firma, Werte, Team, Zahlen, offene Stellen
+ueber-uns.html                Familienbetrieb, sechs USP, Fakten, offene Stellen
 kontakt.html                  Offertformular, Kontaktangaben, FAQ
-impressum.html                Impressum (Platzhalter)
-datenschutz.html              Datenschutzerklärung nach Schweizer DSG (Platzhalter)
+impressum.html                Impressum (Einzelfirma)
+datenschutz.html              Datenschutzerklärung nach Schweizer DSG
 404.html                      Fehlerseite
 css/style.css                 Gesamtes Design (Design-Tokens zuoberst)
 js/main.js                    Navigation, Scroll-Effekte, Formularvalidierung
-assets/favicon.svg            Favicon
-assets/img/                    Ablage für eigene Fotos
+assets/logo.svg               Wortmarke Cleeno (Farbverlauf)
+assets/favicon.svg            Browser-Symbol
+assets/fonts/                 Outfit und Source Sans 3, lokal eingebunden
+assets/img/                   Ablage für eigene Fotos
 robots.txt, sitemap.xml       Für Suchmaschinen
 ```
 
 Header und Footer stehen in jeder Datei gleich drin (so funktioniert eine
-statische Seite ohne Build-Schritt). Wer etwas an der Navigation ändert, muss die
-Änderung in allen Dateien nachziehen – am schnellsten mit Suchen-und-Ersetzen
-über alle `.html`-Dateien.
+statische Seite ohne Build-Schritt). Wer etwas an der Navigation ändert, muss
+die Änderung in allen Dateien nachziehen – am schnellsten mit
+Suchen-und-Ersetzen über alle `.html`-Dateien.
 
-## Vor dem Livegang anpassen
+## Noch offen: diese Angaben ersetzen
 
-Der Firmenname **Cleeno Reinigungen** ist bereits überall eingesetzt (im Logo
-erscheint er als «Cleeno» mit dem Zusatz «Reinigungen»). Alle übrigen
-Firmenangaben sind noch Platzhalter – am einfachsten per Suchen-und-Ersetzen über
-alle Dateien:
+Firmenname, Rechtsform, Adresse und Einsatzgebiet sind eingetragen. Diese
+Platzhalter fehlen noch – am einfachsten per Suchen-und-Ersetzen über alle
+Dateien:
 
 | Platzhalter | Bedeutung |
 |---|---|
-| `044 123 45 67` | Telefonnummer (Anzeige) |
-| `+41441234567` | Telefonnummer in `tel:`-Links |
-| `offerte@cleeno-reinigungen.ch` | E-Mail für Offertanfragen |
-| `info@` / `datenschutz@` / `jobs@cleeno-reinigungen.ch` | weitere Adressen |
-| `Musterstrasse 12`, `8005 Zürich` | Adresse |
-| `https://www.cleeno-reinigungen.ch` | Domain (Canonical, Sitemap, robots.txt) |
-| `CHE-123.456.789` | UID / MWST-Nummer im Impressum |
-| `Zürich`, `Winterthur`, … | Einsatzgebiet |
-
-Die Domain `cleeno-reinigungen.ch` ist aus dem Firmennamen abgeleitet und noch
-nicht bestätigt – bitte durch die tatsächliche Domain ersetzen. Ebenso fehlt im
-Impressum die Rechtsform (GmbH, AG oder Einzelfirma).
+| `041 123 45 67` | Telefonnummer (Anzeige) – **erfunden, unbedingt ersetzen** |
+| `+41411234567` | dieselbe Nummer in `tel:`-Links |
+| `cleeno-reinigungen.ch` | Domain – aus dem Namen abgeleitet, noch nicht bestätigt |
+| `offerte@` / `info@` / `datenschutz@` / `jobs@cleeno-reinigungen.ch` | E-Mail-Adressen |
+| `[Vor- und Nachname eintragen]` | Inhaber im Impressum |
+| `[CHE-000.000.000 eintragen]` | UID- / MWST-Nummer im Impressum |
 
 Ebenfalls prüfen:
 
-- **Preise** in `leistungen.html`, `umzugsreinigung.html` und den FAQ-Blöcken.
-- **Zahlen** auf der Startseite und in `ueber-uns.html` (Jahre, Mitarbeitende, Objekte).
-- **Kundenstimmen** auf der Startseite – nur echte Zitate verwenden.
-- **Team** in `ueber-uns.html` (Namen, Funktionen, später Fotos).
-- **Impressum und Datenschutz**: Vorlagen, die vor der Veröffentlichung rechtlich
-  geprüft werden sollten.
+- **Preise** in `leistungen.html`, `umzugsreinigung.html` und den FAQ-Blöcken –
+  aktuell branchenübliche Richtwerte, keine kalkulierten Zahlen.
+- **Garantien** (Festpreis, Abnahme, Reaktion innert 24 Stunden): Sie stehen
+  prominent auf jeder Seite. Bitte nur so stehen lassen, wie sie auch
+  eingehalten werden.
+- **Vergleichstabelle** auf der Startseite: Die Spalte «Häufig bei anderen»
+  ist bewusst zurückhaltend formuliert. Konkrete Mitbewerber sollten dort
+  weiterhin nicht genannt werden.
+- **Impressum und Datenschutz**: Vorlagen, die vor der Veröffentlichung
+  rechtlich geprüft werden sollten. Eine Einzelfirma muss im Firmennamen den
+  Familiennamen des Inhabers führen – die vollständige Firmenbezeichnung gehört
+  deshalb ins Impressum.
 - **Strukturierte Daten** (`application/ld+json`) am Ende von `index.html`.
 
-## Farben und Schriften
+Bewusst **nicht** enthalten sind erfundene Kundenstimmen, Mitarbeiterzahlen
+oder Bewertungen. Sobald echte Referenzen vorliegen, lassen sie sich als
+eigener Abschnitt ergänzen.
 
-Alle Farben stehen als CSS-Variablen ganz oben in `css/style.css` unter `:root`.
-Für ein anderes Erscheinungsbild genügt es meistens, `--brand`, `--brand-dark`
-und `--accent` zu ändern. Als Schrift wird die System-Schriftart des jeweiligen
-Geräts verwendet – das ist schnell und benötigt keine externen Ressourcen.
+## Logo
+
+`assets/logo.svg` ist eine Nachzeichnung der gelieferten Bilddatei: dieselben
+Buchstabenformen, derselbe Farbverlauf von Mintgrün nach Blau, aber als
+Vektor – dadurch bei jeder Grösse scharf und nur rund 1 KB gross. Falls die
+Originaldatei als SVG, AI oder EPS vorliegt, kann sie `assets/logo.svg`
+einfach ersetzen; im HTML muss nichts geändert werden.
+
+Aus dem Logo stammt auch die Farbwelt der Website. Alle Farben stehen als
+CSS-Variablen zuoberst in `css/style.css`:
+
+| Variable | Wert | Einsatz |
+|---|---|---|
+| `--mint` | `#1FCFA8` | Verlauf links, Häkchen, Akzente |
+| `--blue` | `#2A6DF7` | Verlauf rechts |
+| `--blue-deep` | `#1B4FD1` | Links, Buttons, Icons |
+| `--ink` | `#0C1B33` | Titel und Fliesstext |
+| `--bg-deep` | `#0A1830` | Footer und Aktionsflächen |
+
+## Schriften
+
+Outfit (Titel, Buttons) und Source Sans 3 (Lauftext) liegen unter
+`assets/fonts/`, sind auf die benötigten Zeichen reduziert und zusammen rund
+80 KB gross. Beide stehen unter der SIL Open Font License und dürfen
+kommerziell verwendet werden. Details in `assets/fonts/README.md`.
 
 ## Bilder einsetzen
 
 Wo jetzt farbige Flächen mit Symbol stehen (`<div class="media">`), gehören
-später echte Fotos hin. Eigene Bilder in `assets/img/` ablegen und den Block
-ersetzen:
+später echte Fotos hin – Team, Referenzobjekte, Vorher/Nachher. Eigene Bilder
+in `assets/img/` ablegen und den Block ersetzen:
 
 ```html
 <div class="media">
@@ -96,7 +122,8 @@ ersetzen:
 ```
 
 Empfehlung: Breite ca. 1600 px, als WebP oder JPEG mit rund 150–250 KB. Jedes
-Bild braucht ein aussagekräftiges `alt`-Attribut.
+Bild braucht ein aussagekräftiges `alt`-Attribut. Echte Fotos vom eigenen Team
+wirken deutlich stärker als Stockbilder – gerade bei einem Familienbetrieb.
 
 ## Offertformular anschliessen
 
@@ -113,20 +140,20 @@ var FALLBACK_MAIL = 'offerte@ihre-domain.ch';
 ```
 
 Ist `FORM_ENDPOINT` gesetzt, wird das Formular per `fetch` an den Dienst
-gesendet, ohne dass die Seite neu lädt; Erfolg und Fehler erscheinen direkt über
-dem Formular. Ein verstecktes Honeypot-Feld hält einfache Spam-Bots ab.
+gesendet, ohne dass die Seite neu lädt; Erfolg und Fehler erscheinen direkt
+über dem Formular. Ein verstecktes Honeypot-Feld hält einfache Spam-Bots ab.
 
-Wer PHP-Hosting nutzt, kann stattdessen ein eigenes `sendmail.php` schreiben und
-dessen Pfad als `FORM_ENDPOINT` eintragen – das JavaScript sendet ein normales
-`FormData`-Objekt per POST.
+Die Schnellofferte im Hero und die Buttons auf den Leistungsseiten übergeben
+die gewünschte Leistung als `?leistung=…` an die Kontaktseite, wo das
+Auswahlfeld automatisch vorbelegt wird.
 
 ## Veröffentlichen
 
 Es müssen nur die Dateien auf den Server – kein Build, kein Node.
 
 - **Eigenes Hosting**: Inhalt des Ordners per FTP/SFTP ins Web-Root laden.
-- **Netlify / Cloudflare Pages**: Repository verbinden, Build-Befehl leer lassen,
-  Publish-Verzeichnis `/`.
+- **Netlify / Cloudflare Pages**: Repository verbinden, Build-Befehl leer
+  lassen, Publish-Verzeichnis `/`.
 - **GitHub Pages**: In den Repository-Einstellungen unter *Pages* den Branch
   wählen und als Ordner `/ (root)` angeben.
 
@@ -138,6 +165,7 @@ Nach dem Aufschalten die Domain in `sitemap.xml`, `robots.txt` und in den
 - Semantische Struktur mit `header`/`main`/`footer`, Sprunglink zum Inhalt
 - Sichtbare Fokusrahmen, `aria-current` für die aktive Seite, beschriftete Icons
 - Mobile Navigation mit `aria-expanded`, bedienbar per Tastatur (inkl. Escape)
+- Feste Aktionsleiste auf dem Handy mit «Anrufen» und «Offerte anfordern»
 - Formularfehler werden mit `aria-invalid` und Textmeldung ausgegeben
 - Animationen respektieren `prefers-reduced-motion`
-- Ohne JavaScript bleiben alle Inhalte sichtbar und lesbar
+- Ohne JavaScript bleiben alle Inhalte sichtbar und bedienbar

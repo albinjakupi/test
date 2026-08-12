@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 132" role="img" aria-label="Cleeno">
+  <title>Cleeno</title>
+  <defs>
+    <linearGradient id="cleeno-grad" x1="0" y1="0" x2="580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1FCFA8"/>
+      <stop offset=".34" stop-color="#29AEDB"/>
+      <stop offset=".68" stop-color="#2C86EE"/>
+      <stop offset="1" stop-color="#2A6DF7"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#cleeno-grad)" stroke-width="23" stroke-linecap="round" stroke-linejoin="round">
+    <!-- C -->
+    <path d="M96.4 26.2A52 52 0 1 0 96.4 105.8"/>
+    <!-- l -->
+    <path d="M149 14V118"/>
+    <!-- e -->
+    <path d="M249 85A33 33 0 1 0 226.2 116.4"/>
+    <path d="M183 85H249"/>
+    <!-- e -->
+    <path d="M349 85A33 33 0 1 0 326.2 116.4"/>
+    <path d="M283 85H349"/>
+    <!-- n -->
+    <path d="M383 118V85A33 33 0 0 1 449 85V118"/>
+    <!-- o -->
+    <circle cx="525" cy="77.5" r="40"/>
+  </g>
+</svg>
