@@ -35,7 +35,8 @@ datenschutz.html              Datenschutzerklärung nach Schweizer DSG
 404.html                      Fehlerseite
 css/style.css                 Gesamtes Design (Design-Tokens zuoberst)
 js/main.js                    Navigation, Scroll-Effekte, Formularvalidierung
-assets/logo.svg               Wortmarke Cleeno (Farbverlauf)
+assets/logo.svg               Wortmarke Cleeno, aus der Vorlage vektorisiert
+assets/logo-original.png      gelieferte Originaldatei
 assets/favicon.svg            Browser-Symbol
 assets/fonts/                 Outfit und Source Sans 3, lokal eingebunden
 assets/img/                   Ablage für eigene Fotos
@@ -84,20 +85,25 @@ eigener Abschnitt ergänzen.
 
 ## Logo
 
-`assets/logo.svg` ist eine Nachzeichnung der gelieferten Bilddatei: dieselben
-Buchstabenformen, derselbe Farbverlauf von Mintgrün nach Blau, aber als
-Vektor – dadurch bei jeder Grösse scharf und nur rund 1 KB gross. Falls die
-Originaldatei als SVG, AI oder EPS vorliegt, kann sie `assets/logo.svg`
-einfach ersetzen; im HTML muss nichts geändert werden.
+`assets/logo.svg` ist direkt aus der gelieferten Bilddatei vektorisiert: Die
+Konturen wurden aus dem Original nachgezeichnet, die Verlaufsfarben spaltenweise
+daraus gemessen. Das Ergebnis ist konturgleich mit der Vorlage, aber bei jeder
+Grösse scharf und nur rund 4 KB gross. Die Originaldatei liegt unverändert als
+`assets/logo-original.png` daneben.
+
+Falls das Logo als echte Vektordatei (SVG, AI, EPS) vorliegt, kann sie
+`assets/logo.svg` einfach ersetzen – im HTML muss nichts geändert werden.
+`assets/favicon.svg` enthält das «C» aus derselben Vorlage auf einer
+Verlaufsfläche.
 
 Aus dem Logo stammt auch die Farbwelt der Website. Alle Farben stehen als
 CSS-Variablen zuoberst in `css/style.css`:
 
 | Variable | Wert | Einsatz |
 |---|---|---|
-| `--mint` | `#1FCFA8` | Verlauf links, Häkchen, Akzente |
-| `--blue` | `#2A6DF7` | Verlauf rechts |
-| `--blue-deep` | `#1B4FD1` | Links, Buttons, Icons |
+| `--mint` | `#26CEB1` | Verlauf links (Logo), Häkchen, Akzente |
+| `--blue` | `#2581FF` | Verlauf rechts (Logo) |
+| `--blue-deep` | `#1467E0` | Links, Buttons, Icons |
 | `--ink` | `#0C1B33` | Titel und Fliesstext |
 | `--bg-deep` | `#0A1830` | Footer und Aktionsflächen |
 
