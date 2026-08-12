@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.glanzwerk-reinigung.ch/sitemap.xml
+Sitemap: https://www.cleeno-reinigungen.ch/sitemap.xml

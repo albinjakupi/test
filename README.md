@@ -1,4 +1,4 @@
-# Website Reinigungsfirma (Glanzwerk Reinigung)
+# Website Cleeno Reinigungen
 
 Statische Website für eine Reinigungsfirma – reines HTML, CSS und JavaScript, ohne
 Build-Schritt, ohne Framework und ohne externe Abhängigkeiten (keine CDNs, keine
@@ -45,20 +45,25 @@ statische Seite ohne Build-Schritt). Wer etwas an der Navigation ändert, muss d
 
 ## Vor dem Livegang anpassen
 
-Alle Firmenangaben sind Platzhalter. Am einfachsten per Suchen-und-Ersetzen über
+Der Firmenname **Cleeno Reinigungen** ist bereits überall eingesetzt (im Logo
+erscheint er als «Cleeno» mit dem Zusatz «Reinigungen»). Alle übrigen
+Firmenangaben sind noch Platzhalter – am einfachsten per Suchen-und-Ersetzen über
 alle Dateien:
 
 | Platzhalter | Bedeutung |
 |---|---|
-| `Glanzwerk Reinigung GmbH` / `Glanzwerk` | Firmenname |
 | `044 123 45 67` | Telefonnummer (Anzeige) |
 | `+41441234567` | Telefonnummer in `tel:`-Links |
-| `offerte@glanzwerk-reinigung.ch` | E-Mail für Offertanfragen |
-| `info@` / `datenschutz@` / `jobs@glanzwerk-reinigung.ch` | weitere Adressen |
+| `offerte@cleeno-reinigungen.ch` | E-Mail für Offertanfragen |
+| `info@` / `datenschutz@` / `jobs@cleeno-reinigungen.ch` | weitere Adressen |
 | `Musterstrasse 12`, `8005 Zürich` | Adresse |
-| `https://www.glanzwerk-reinigung.ch` | Domain (Canonical, Sitemap, robots.txt) |
+| `https://www.cleeno-reinigungen.ch` | Domain (Canonical, Sitemap, robots.txt) |
 | `CHE-123.456.789` | UID / MWST-Nummer im Impressum |
 | `Zürich`, `Winterthur`, … | Einsatzgebiet |
+
+Die Domain `cleeno-reinigungen.ch` ist aus dem Firmennamen abgeleitet und noch
+nicht bestätigt – bitte durch die tatsächliche Domain ersetzen. Ebenso fehlt im
+Impressum die Rechtsform (GmbH, AG oder Einzelfirma).
 
 Ebenfalls prüfen:
 

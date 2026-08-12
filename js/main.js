@@ -1,5 +1,5 @@
 /* =========================================================
-   Glanzwerk Reinigung – main.js
+   Cleeno Reinigungen – main.js
    - Mobile-Navigation
    - Sticky-Header-Schatten
    - Einblende-Animation beim Scrollen
@@ -17,7 +17,7 @@
      stattdessen das E-Mail-Programm mit vorausgefüllter Nachricht.
      Details siehe README.md.                                                */
   var FORM_ENDPOINT = '';
-  var FALLBACK_MAIL = 'offerte@glanzwerk-reinigung.ch';
+  var FALLBACK_MAIL = 'offerte@cleeno-reinigungen.ch';
 
   /* ---------- Mobile-Navigation ---------- */
   var toggle = document.querySelector('.nav__toggle');
