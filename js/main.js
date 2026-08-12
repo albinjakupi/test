@@ -1,25 +1,34 @@
 /* =========================================================
    Cleeno Reinigungen – main.js
-   - Mobile-Navigation
-   - Sticky-Header-Schatten
-   - Einblende-Animation beim Scrollen
-   - Jahreszahl im Footer
-   - Validierung & Versand des Offertformulars
+
+   1.  Konfiguration
+   2.  Mobile-Navigation
+   3.  Sticky-Header und Scroll-Fortschritt
+   4.  Einblenden beim Scrollen
+   5.  Zahlen hochzählen
+   6.  Reiter (Leistungsumfang)
+   7.  Vorher/Nachher-Vergleich
+   8.  Sprungnavigation mit aktivem Abschnitt
+   9.  Jahreszahl und Vorbelegung aus der URL
+   10. Offertformular
    ========================================================= */
 (function () {
   'use strict';
 
   document.documentElement.classList.add('js');
 
-  /* ---------- Konfiguration ----------
-     ENDPOINT: URL eines Formular-Dienstes (z. B. Formspree, Getform, eigene
+  var reduceMotion = window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 1. Konfiguration ----------
+     FORM_ENDPOINT: URL eines Formular-Dienstes (z. B. Formspree, Getform, eigene
      PHP-/Serverless-Funktion). Solange der Wert leer ist, öffnet das Formular
      stattdessen das E-Mail-Programm mit vorausgefüllter Nachricht.
      Details siehe README.md.                                                */
   var FORM_ENDPOINT = '';
   var FALLBACK_MAIL = 'offerte@cleeno-reinigungen.ch';
 
-  /* ---------- Mobile-Navigation ---------- */
+  /* ---------- 2. Mobile-Navigation ---------- */
   var toggle = document.querySelector('.nav__toggle');
   var drawer = document.getElementById('mobile-nav');
 
@@ -46,17 +55,31 @@
     });
   }
 
-  /* ---------- Sticky-Header ---------- */
+  /* ---------- 3. Sticky-Header und Scroll-Fortschritt ---------- */
   var header = document.querySelector('.site-header');
-  if (header) {
+  var progressBar = document.querySelector('.progress__bar');
+
+  if (header || progressBar) {
+    var ticking = false;
     var onScroll = function () {
-      header.classList.toggle('is-stuck', window.scrollY > 8);
+      if (ticking) { return; }
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        var y = window.scrollY || document.documentElement.scrollTop;
+        if (header) { header.classList.toggle('is-stuck', y > 8); }
+        if (progressBar) {
+          var max = document.documentElement.scrollHeight - window.innerHeight;
+          progressBar.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + '%';
+        }
+        ticking = false;
+      });
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
   }
 
-  /* ---------- Einblenden beim Scrollen ---------- */
+  /* ---------- 4. Einblenden beim Scrollen ---------- */
   var reveals = document.querySelectorAll('.reveal');
   if (reveals.length) {
     if ('IntersectionObserver' in window) {
@@ -74,22 +97,142 @@
     }
   }
 
-  /* ---------- Jahreszahl im Footer ---------- */
-  var year = document.querySelectorAll('[data-year]');
-  year.forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
+  /* ---------- 5. Zahlen hochzählen ---------- */
+  var counters = document.querySelectorAll('[data-count]');
+  if (counters.length) {
+    var runCount = function (el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      if (reduceMotion) { el.textContent = target + suffix; return; }
+      var duration = 900;
+      var started = null;
+      var step = function (now) {
+        if (started === null) { started = now; }
+        var p = Math.min(1, (now - started) / duration);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) { window.requestAnimationFrame(step); }
+      };
+      window.requestAnimationFrame(step);
+    };
 
-  /* ---------- Leistung aus der URL vorauswählen ----------
-     Verlinkung wie kontakt.html?leistung=bueroreinigung setzt das Auswahlfeld. */
-  var params = new URLSearchParams(window.location.search);
-  var wanted = params.get('leistung');
-  var serviceSelect = document.getElementById('leistung');
-  if (wanted && serviceSelect) {
-    Array.prototype.forEach.call(serviceSelect.options, function (opt) {
-      if (opt.value === wanted) { serviceSelect.value = wanted; }
-    });
+    if ('IntersectionObserver' in window) {
+      var countObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            runCount(entry.target);
+            countObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      counters.forEach(function (el) { countObserver.observe(el); });
+    } else {
+      counters.forEach(runCount);
+    }
   }
 
-  /* ---------- Offertformular ---------- */
+  /* ---------- 6. Reiter ---------- */
+  document.querySelectorAll('[data-tabs]').forEach(function (wrapper) {
+    var tabs = Array.prototype.slice.call(wrapper.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) { return; }
+
+    var select = function (tab, focus) {
+      tabs.forEach(function (t) {
+        var active = t === tab;
+        t.setAttribute('aria-selected', String(active));
+        t.tabIndex = active ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) { panel.hidden = !active; }
+      });
+      if (focus) { tab.focus(); }
+    };
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(tab); });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') { next = tabs[(i + 1) % tabs.length]; }
+        if (e.key === 'ArrowLeft') { next = tabs[(i - 1 + tabs.length) % tabs.length]; }
+        if (e.key === 'Home') { next = tabs[0]; }
+        if (e.key === 'End') { next = tabs[tabs.length - 1]; }
+        if (next) { e.preventDefault(); select(next, true); }
+      });
+    });
+
+    select(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0]);
+  });
+
+  /* ---------- 7. Vorher/Nachher-Vergleich ---------- */
+  document.querySelectorAll('.ba').forEach(function (ba) {
+    var range = ba.querySelector('input[type="range"]');
+    if (!range) { return; }
+    var apply = function () { ba.style.setProperty('--split', range.value + '%'); };
+    range.addEventListener('input', apply);
+    apply();
+
+    // Erst beim Sichtbarwerden einmal aufziehen – zeigt, dass man schieben kann.
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      var teaser = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) { return; }
+          teaser.unobserve(entry.target);
+          var from = 84, to = 50, start = null;
+          range.value = from; apply();
+          var step = function (now) {
+            if (start === null) { start = now; }
+            var p = Math.min(1, (now - start) / 900);
+            var eased = 1 - Math.pow(1 - p, 3);
+            range.value = from + (to - from) * eased;
+            apply();
+            if (p < 1) { window.requestAnimationFrame(step); }
+          };
+          window.setTimeout(function () { window.requestAnimationFrame(step); }, 250);
+        });
+      }, { threshold: 0.4 });
+      teaser.observe(ba);
+    }
+  });
+
+  /* ---------- 8. Sprungnavigation mit aktivem Abschnitt ---------- */
+  document.querySelectorAll('.subnav').forEach(function (subnav) {
+    if (!('IntersectionObserver' in window)) { return; }
+    var links = Array.prototype.slice.call(subnav.querySelectorAll('a[href^="#"]'));
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+                       .filter(Boolean);
+    if (!targets.length) { return; }
+
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) { return; }
+        links.forEach(function (a) {
+          a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + entry.target.id));
+        });
+      });
+    }, { rootMargin: '-140px 0px -65% 0px' });
+    targets.forEach(function (t) { spy.observe(t); });
+  });
+
+  /* ---------- 9. Jahreszahl und Vorbelegung aus der URL ---------- */
+  document.querySelectorAll('[data-year]').forEach(function (el) {
+    el.textContent = String(new Date().getFullYear());
+  });
+
+  // Verlinkungen wie kontakt.html?leistung=bueroreinigung&objekt=84%20m%C2%B2
+  var params = new URLSearchParams(window.location.search);
+  ['leistung', 'objekt', 'termin', 'nachricht'].forEach(function (name) {
+    var value = params.get(name);
+    var field = document.getElementById(name);
+    if (!value || !field) { return; }
+    if (field.tagName === 'SELECT') {
+      Array.prototype.forEach.call(field.options, function (opt) {
+        if (opt.value === value) { field.value = value; }
+      });
+    } else {
+      field.value = value;
+    }
+  });
+
+  /* ---------- 10. Offertformular ---------- */
   var form = document.getElementById('offerte-form');
   if (!form) { return; }
 

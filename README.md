@@ -22,6 +22,7 @@ python3 -m http.server 8000
 index.html                    Startseite (Hero mit Schnellofferte, Leistungen,
                               Garantien, Vergleich, Ablauf, Einsatzgebiet, FAQ)
 leistungen.html               Übersicht aller Leistungen inkl. Richtpreisen
+preisrechner.html             Interaktiver Preisrechner mit Übergabe an die Offerte
 unterhaltsreinigung.html      Detailseite Leistung
 bueroreinigung.html           Detailseite Leistung
 fensterreinigung.html         Detailseite Leistung
@@ -34,10 +35,14 @@ impressum.html                Impressum (Einzelfirma)
 datenschutz.html              Datenschutzerklärung nach Schweizer DSG
 404.html                      Fehlerseite
 css/style.css                 Gesamtes Design (Design-Tokens zuoberst)
-js/main.js                    Navigation, Scroll-Effekte, Formularvalidierung
+js/main.js                    Navigation, Scroll-Effekte, Reiter, Vergleichsregler,
+                              Formularvalidierung
+js/preisrechner.js            Rechenlogik und Tarife des Preisrechners
 assets/logo.svg               Wortmarke Cleeno, aus der Vorlage vektorisiert
 assets/logo-original.png      gelieferte Originaldatei
 assets/favicon.svg            Browser-Symbol
+assets/illu-vorher.svg        Illustration für den Vorher/Nachher-Regler
+assets/illu-nachher.svg       dieselbe Szene nach der Reinigung
 assets/fonts/                 Outfit und Source Sans 3, lokal eingebunden
 assets/img/                   Ablage für eigene Fotos
 robots.txt, sitemap.xml       Für Suchmaschinen
@@ -65,8 +70,10 @@ Dateien:
 
 Ebenfalls prüfen:
 
-- **Preise** in `leistungen.html`, `umzugsreinigung.html` und den FAQ-Blöcken –
-  aktuell branchenübliche Richtwerte, keine kalkulierten Zahlen.
+- **Preise** in `leistungen.html`, `umzugsreinigung.html`, den FAQ-Blöcken und im
+  Preisrechner – aktuell branchenübliche Richtwerte, keine kalkulierten Zahlen.
+  **Bitte vor dem Livegang mit den eigenen Kalkulationen abgleichen** (siehe
+  Abschnitt «Preisrechner»).
 - **Garantien** (Festpreis, Abnahme, Reaktion innert 24 Stunden): Sie stehen
   prominent auf jeder Seite. Bitte nur so stehen lassen, wie sie auch
   eingehalten werden.
@@ -114,6 +121,48 @@ Outfit (Titel, Buttons) und Source Sans 3 (Lauftext) liegen unter
 80 KB gross. Beide stehen unter der SIL Open Font License und dürfen
 kommerziell verwendet werden. Details in `assets/fonts/README.md`.
 
+## Interaktive Bausteine
+
+| Baustein | Wo | Was es tut |
+|---|---|---|
+| Preisrechner | `preisrechner.html` | Drei Schritte, Live-Preisspanne, Übergabe an das Offertformular |
+| Schnelleinstieg | Startseite, Hero | Leistung wählen und direkt im Rechner landen |
+| Leistungsumfang | Startseite | Reiter nach Bereich (Küche, Bad, Wohnräume, Fenster, Extras) |
+| Vorher/Nachher | Startseite | Regler zum Vergleichen, per Maus, Finger und Tastatur bedienbar |
+| Sprungnavigation | Leistungsseiten | Klebt unter dem Kopf und markiert den sichtbaren Abschnitt |
+| Fortschrittsbalken | alle Seiten | Zeigt die Leseposition am oberen Rand |
+| Zähler | Startseite, Über uns | Zahlen laufen beim Sichtbarwerden hoch |
+
+Alle Effekte respektieren `prefers-reduced-motion`, und ohne JavaScript bleiben
+sämtliche Inhalte lesbar: Die Reiter zeigen dann den ersten Bereich, der
+Vergleichsregler steht in der Mitte, und statt des Rechners erscheint ein
+Hinweis mit Link auf die Richtpreise und das Offertformular.
+
+## Preisrechner
+
+Die Rechenlogik steht in `js/preisrechner.js`. Ganz oben in der Datei liegt der
+Block `TARIFE` – dort und nur dort werden die Ansätze gepflegt:
+
+```js
+var TARIFE = {
+  stundensatz: [45, 55],        // CHF pro Stunde, Unterhaltsreinigung
+  umzugBasis: { '1.5': 390, '2.5': 490, '3.5': 690, ... },
+  fensterProFluegel: [6, 9],
+  bueroProM2: [0.45, 0.65],     // pro Einsatz
+  ...
+};
+```
+
+Jede Leistung hat darunter einen eigenen Block mit Feldern, Auswahlmöglichkeiten
+und Extras. Wer eine Position ergänzen will, kopiert einen bestehenden Eintrag –
+die Oberfläche baut sich daraus automatisch auf.
+
+**Wichtig:** Die hinterlegten Werte sind branchenübliche Erfahrungswerte, keine
+Kalkulation dieses Betriebs. Bitte vor dem Aufschalten prüfen und mit den
+Richtpreisen auf den Leistungsseiten abgleichen. Der Rechner weist an mehreren
+Stellen darauf hin, dass es sich um eine unverbindliche Schätzung handelt –
+dieser Hinweis sollte stehen bleiben.
+
 ## Bilder einsetzen
 
 Wo jetzt farbige Flächen mit Symbol stehen (`<div class="media">`), gehören
@@ -130,6 +179,12 @@ in `assets/img/` ablegen und den Block ersetzen:
 Empfehlung: Breite ca. 1600 px, als WebP oder JPEG mit rund 150–250 KB. Jedes
 Bild braucht ein aussagekräftiges `alt`-Attribut. Echte Fotos vom eigenen Team
 wirken deutlich stärker als Stockbilder – gerade bei einem Familienbetrieb.
+
+**Vorher/Nachher:** Der Regler auf der Startseite zeigt zurzeit zwei
+Illustrationen. Sobald echte Aufnahmen vorliegen, ersetzen Sie einfach die beiden
+`<img>`-Quellen im Block `<div class="ba">` – wichtig ist nur, dass beide Bilder
+dieselbe Kameraposition und dasselbe Seitenverhältnis haben. Danach den
+Hinweissatz «Schematische Darstellung …» darunter entfernen.
 
 ## Offertformular anschliessen
 
