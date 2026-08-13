@@ -33,7 +33,13 @@ ueber-uns.html                Familienbetrieb, sechs USP, Fakten, offene Stellen
 kontakt.html                  Offertformular, Kontaktangaben, FAQ
 impressum.html                Impressum (Einzelfirma)
 datenschutz.html              Datenschutzerklärung nach Schweizer DSG
+ratgeber.html                 Übersicht der Ratgeber-Beiträge
+ratgeber-wohnungsabgabe.html  Checkliste für die Wohnungsübergabe
+ratgeber-umzugsreinigung-kosten.html   Preise und Kostenfaktoren
+ratgeber-reinigungsplan-buero.html     Reinigungsplan mit Vorlage
 404.html                      Fehlerseite
+_headers                      Sicherheits- und Cache-Regeln (Netlify, Cloudflare)
+site.webmanifest              App-Symbol und Name beim Speichern auf dem Startbildschirm
 css/style.css                 Gesamtes Design (Design-Tokens zuoberst)
 js/main.js                    Navigation, Scroll-Effekte, Reiter, Vergleichsregler,
                               Formularvalidierung
@@ -41,6 +47,8 @@ js/preisrechner.js            Rechenlogik und Tarife des Preisrechners
 assets/logo.svg               Wortmarke Cleeno, aus der Vorlage vektorisiert
 assets/logo-original.png      gelieferte Originaldatei
 assets/favicon.svg            Browser-Symbol
+assets/og-cleeno.png          Vorschaubild beim Teilen (WhatsApp, LinkedIn, Facebook)
+assets/icon-192.png, icon-512.png, apple-touch-icon.png   App-Symbole
 assets/illu-vorher.svg        Illustration für den Vorher/Nachher-Regler
 assets/illu-nachher.svg       dieselbe Szene nach der Reinigung
 assets/fonts/                 Outfit und Source Sans 3, lokal eingebunden
@@ -162,6 +170,39 @@ Kalkulation dieses Betriebs. Bitte vor dem Aufschalten prüfen und mit den
 Richtpreisen auf den Leistungsseiten abgleichen. Der Rechner weist an mehreren
 Stellen darauf hin, dass es sich um eine unverbindliche Schätzung handelt –
 dieser Hinweis sollte stehen bleiben.
+
+## Sichtbarkeit bei Google und in sozialen Netzwerken
+
+Jede Seite liefert strukturierte Daten (JSON-LD) aus, damit Suchmaschinen die
+Inhalte einordnen können:
+
+| Seite | Strukturierte Daten |
+|---|---|
+| Startseite | `CleaningService` mit Adresse, Öffnungszeiten, Einsatzgebiet, plus `FAQPage` |
+| Leistungsseiten | `Service`, `FAQPage`, `BreadcrumbList` |
+| Ratgeber-Beiträge | `Article`, `BreadcrumbList` |
+| Kontakt, Preisrechner | `FAQPage`, `BreadcrumbList` |
+
+Die FAQ-Auszeichnung ist der Grund, warum Google einzelne Fragen direkt im
+Suchergebnis anzeigen kann. Wenn Sie Fragen und Antworten im HTML ändern,
+laufen die strukturierten Daten automatisch mit – sie werden aus demselben
+Text erzeugt.
+
+Beim Teilen eines Links erscheint `assets/og-cleeno.png` als Vorschaubild.
+Wer es neu erzeugen will, passt die Vorlage an und exportiert wieder mit
+1200 × 630 Pixeln.
+
+## Ratgeber erweitern
+
+Die drei Beiträge sind bewusst als Nachschlagewerk geschrieben, nicht als
+Werbetexte – das ist der Grund, warum solche Seiten überhaupt gefunden und
+verlinkt werden. Weitere Themen mit Potenzial: Kalk in Badezimmern,
+Bodenpflege nach Material, Hygiene in Gemeinschaftsküchen, Winterdienst und
+Räumungspflicht.
+
+Beim Ergänzen eines Beitrags gehören dazu: eine eigene Seite nach dem Muster
+der bestehenden, ein Eintrag in `ratgeber.html`, eine Zeile in `sitemap.xml`
+und die Verlinkung am Ende der verwandten Beiträge.
 
 ## Bilder einsetzen
 

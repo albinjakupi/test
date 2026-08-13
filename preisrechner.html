@@ -3,14 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Preisrechner – Richtpreis für Ihre Reinigung in 30 Sekunden | Cleeno Reinigungen</title>
-<meta name="description" content="Berechnen Sie den Richtpreis für Umzugs-, Unterhalts-, Büro-, Fenster-, Bauend- oder Liegenschaftsreinigung in Luzern und Zug – kostenlos, ohne Anmeldung, mit Übergabe an die Offerte.">
+<title>Preisrechner – Richtpreis in 30 Sekunden | Cleeno</title>
+<meta name="description" content="Richtpreis für Umzugs-, Unterhalts-, Büro-, Fenster- oder Bauendreinigung in Luzern und Zug berechnen – kostenlos, ohne Anmeldung, in 30 Sekunden.">
 <link rel="canonical" href="https://www.cleeno-reinigungen.ch/preisrechner.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Preisrechner – Richtpreis für Ihre Reinigung in 30 Sekunden | Cleeno Reinigungen">
-<meta property="og:description" content="Berechnen Sie den Richtpreis für Umzugs-, Unterhalts-, Büro-, Fenster-, Bauend- oder Liegenschaftsreinigung in Luzern und Zug – kostenlos, ohne Anmeldung, mit Übergabe an die Offerte.">
+<meta property="og:title" content="Preisrechner – Richtpreis in 30 Sekunden | Cleeno">
+<meta property="og:description" content="Richtpreis für Umzugs-, Unterhalts-, Büro-, Fenster- oder Bauendreinigung in Luzern und Zug berechnen – kostenlos, ohne Anmeldung, in 30 Sekunden.">
 <meta property="og:locale" content="de_CH">
+<meta property="og:site_name" content="Cleeno Reinigungen">
+<meta property="og:url" content="https://www.cleeno-reinigungen.ch/preisrechner.html">
+<meta property="og:image" content="https://www.cleeno-reinigungen.ch/assets/og-cleeno.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cleeno Reinigungen – Reinigung mit Abnahmegarantie in Perlen, Luzern und Zug">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1830" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="assets/fonts/outfit-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/source-sans-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
@@ -29,9 +40,9 @@
 
       <div class="nav__menu">
         <ul class="nav__list">
-          <li><a class="nav__link" href="index.html">Startseite</a></li>
           <li><a class="nav__link" href="leistungen.html">Leistungen</a></li>
           <li><a class="nav__link" href="preisrechner.html" aria-current="page">Preisrechner</a></li>
+          <li><a class="nav__link" href="ratgeber.html">Ratgeber</a></li>
           <li><a class="nav__link" href="ueber-uns.html">Über uns</a></li>
           <li><a class="nav__link" href="kontakt.html">Kontakt</a></li>
         </ul>
@@ -57,6 +68,7 @@
         <li><a href="index.html">Startseite</a></li>
         <li><a href="leistungen.html">Leistungen</a></li>
         <li><a href="preisrechner.html" aria-current="page">Preisrechner</a></li>
+        <li><a href="ratgeber.html">Ratgeber</a></li>
         <li><a href="unterhaltsreinigung.html">Unterhaltsreinigung</a></li>
         <li><a href="bueroreinigung.html">Büroreinigung</a></li>
         <li><a href="fensterreinigung.html">Fensterreinigung</a></li>
@@ -133,7 +145,7 @@
         </form>
 
         <aside class="calc__result" aria-live="polite">
-          <h3>Ihr Richtpreis</h3>
+          <h2 class="calc__title">Ihr Richtpreis</h2>
           <p class="calc__price" id="calc-price"><small>Richtpreis</small>CHF –</p>
           <p class="calc__unit" id="calc-unit"></p>
           <ul class="calc__list" id="calc-list"></ul>
@@ -208,6 +220,7 @@
           <li><a href="ueber-uns.html">Über uns</a></li>
           <li><a href="leistungen.html">Alle Leistungen</a></li>
           <li><a href="preisrechner.html">Preisrechner</a></li>
+        <li><a href="ratgeber.html">Ratgeber</a></li>
           <li><a href="kontakt.html">Kontakt &amp; Offerte</a></li>
           <li><a href="impressum.html">Impressum</a></li>
           <li><a href="datenschutz.html">Datenschutz</a></li>
@@ -228,6 +241,7 @@
     <div class="footer__bottom">
       <span>&copy; <span data-year>2026</span> Cleeno Reinigungen</span>
       <span class="footer__legal">
+        <span>Keine Cookies, kein Tracking</span>
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
       </span>
@@ -243,6 +257,74 @@
   <a class="btn btn--grad" href="kontakt.html">Offerte anfordern</a>
 </div>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Startseite",
+      "item": "https://www.cleeno-reinigungen.ch/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Preisrechner",
+      "item": "https://www.cleeno-reinigungen.ch/preisrechner.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie verbindlich ist der Richtpreis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Er ist eine Schätzung auf Basis von Erfahrungswerten und ersetzt keine Offerte. In den allermeisten Fällen liegt der spätere Festpreis innerhalb der angezeigten Spanne. Weicht er ab, sagen wir das vor dem Start – nicht auf der Rechnung."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum eine Spanne statt eines fixen Betrags?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Zwei gleich grosse Wohnungen können unterschiedlich viel Aufwand bedeuten: Zustand, Bodenbeläge, Kalk, Erreichbarkeit. Die Spanne bildet diesen Unterschied ehrlich ab, statt eine Genauigkeit vorzutäuschen, die es vor der Besichtigung nicht gibt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist im Preis enthalten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Arbeitszeit, Reinigungsmittel, Maschinen und die Anfahrt im Einsatzgebiet. Bei Umzugsreinigungen zusätzlich Fenster, Storen und die Abnahmegarantie. Nicht enthalten sind Entsorgungskosten für Mulden und Sondermüll."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Verrechnen Sie Zuschläge?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Für Einsätze am Samstag, an Sonn- und Feiertagen sowie nach 20 Uhr. Diese Zuschläge weisen wir in der Offerte separat aus – sie tauchen nie überraschend auf der Rechnung auf."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was passiert nach dem Absenden?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sie erhalten innert 24 Stunden an Werktagen eine schriftliche Offerte mit fixem Preis. Bei grösseren Objekten schauen wir vorher kurz vorbei – kostenlos und unverbindlich."
+      }
+    }
+  ]
+}
+</script>
 <script src="js/main.js" defer></script>
 <script src="js/preisrechner.js" defer></script>
 </body>

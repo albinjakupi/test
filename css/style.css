@@ -190,7 +190,7 @@ strong { color: var(--ink); font-weight: 600; }
 .btn--outline-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.42); }
 .btn--outline-light:hover { background: rgba(255,255,255,.14); color: #fff; }
 
-.btn--sm { padding: 11px 19px; font-size: .95rem; }
+.btn--sm { padding: 11px 19px; font-size: .95rem; white-space: nowrap; }
 .btn--block { width: 100%; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 
@@ -218,7 +218,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .site-header.is-stuck { border-bottom-color: var(--line); box-shadow: 0 6px 24px rgba(12, 27, 51, .06); }
 
-.nav { display: flex; align-items: center; gap: 18px; min-height: 80px; }
+.nav { display: flex; align-items: center; gap: 14px; min-height: 80px; }
 
 .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; flex: none; }
 .logo img { width: 124px; height: auto; }
@@ -234,15 +234,19 @@ strong { color: var(--ink); font-weight: 600; }
 .nav__list { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
 .nav__list li { margin: 0; }
 .nav__link {
-  display: block; padding: 10px 14px; border-radius: 999px;
-  color: var(--ink-2); font-family: var(--font-display); font-weight: 600; font-size: .98rem; text-decoration: none;
+  display: block; padding: 10px 13px; border-radius: 999px; white-space: nowrap;
+  color: var(--ink-2); font-family: var(--font-display); font-weight: 600; font-size: .97rem; text-decoration: none;
 }
 .nav__link:hover { background: var(--bg-soft); color: var(--blue-darker); }
 .nav__link[aria-current="page"] { color: var(--blue-darker); background: var(--bg-tint); }
 
 .nav__actions { display: none; align-items: center; gap: 14px; }
+/* Die Telefonnummer weicht auf schmalen Desktops der Navigation;
+   auf dem Handy steht sie ohnehin in der festen Aktionsleiste. */
+.nav__phone { display: none; }
+@media (min-width: 1340px) { .nav__actions .nav__phone { display: inline-flex; } }
 .nav__phone {
-  display: inline-flex; flex-direction: column; line-height: 1.15;
+  flex-direction: column; line-height: 1.15;
   font-family: var(--font-display); font-weight: 700; font-size: 1.02rem;
   color: var(--ink); text-decoration: none; white-space: nowrap;
 }
@@ -270,7 +274,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .nav__drawer a:hover, .nav__drawer a[aria-current="page"] { background: var(--bg-soft); color: var(--blue-darker); }
 
-@media (min-width: 1020px) {
+@media (min-width: 1120px) {
   .nav__menu, .nav__actions { display: flex; }
   .nav__toggle { display: none; }
   .nav__drawer { display: none !important; }
@@ -480,7 +484,9 @@ a.card:hover .card__more svg { transform: translateX(4px); }
 .breadcrumb a { color: var(--muted); text-decoration: none; }
 .breadcrumb a:hover { color: var(--blue-deep); text-decoration: underline; }
 
-.prose { max-width: 74ch; }
+.prose { max-width: var(--container); }
+.prose > * { max-width: 74ch; }
+.prose > .table-wrap { max-width: 900px; }
 .prose h2 { margin-top: 2em; }
 .prose h3 { margin-top: 1.6em; }
 .prose ul { padding-left: 1.25em; }
@@ -578,8 +584,8 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
   border-top: 1px solid var(--line); box-shadow: 0 -6px 24px rgba(12, 27, 51, .1);
 }
 .mobile-cta .btn { padding: 13px 14px; font-size: .96rem; }
-@media (min-width: 1020px) { .mobile-cta { display: none; } }
-@media (max-width: 1019px) { body { padding-bottom: 78px; } }
+@media (min-width: 1120px) { .mobile-cta { display: none; } }
+@media (max-width: 1119px) { body { padding-bottom: 78px; } }
 
 /* ---------- 14. Utilities & Animationen ---------- */
 .text-center { text-align: center; }
@@ -794,7 +800,7 @@ fieldset.calc__step[hidden] { display: none; }
   box-shadow: var(--shadow-l); overflow: hidden;
 }
 .calc__result::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: var(--grad); }
-.calc__result h3 { color: #fff; font-size: 1.02rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 20px; }
+.calc__result h2 { color: #fff; font-size: 1.02rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 20px; }
 .calc__price {
   font-family: var(--font-display); font-weight: 700; letter-spacing: -.03em; line-height: 1.05;
   font-size: clamp(2rem, 1.5rem + 2vw, 2.9rem); color: #fff;
