@@ -118,6 +118,9 @@ a { color: var(--blue-deep); text-decoration-thickness: 1px; text-underline-offs
 a:hover { color: var(--blue-darker); }
 
 img, svg { max-width: 100%; height: auto; display: block; }
+/* Sicherheitsnetz: Ein Symbol im Fliesstext darf nie auf Standardgrösse
+   aufblähen, falls keine speziellere Regel greift. */
+a svg, p svg, li > svg { width: 1.05em; height: 1.05em; display: inline-block; vertical-align: -.14em; }
 ul, ol { margin: 0 0 1.1em; padding-left: 1.2em; }
 li + li { margin-top: .35em; }
 strong { color: var(--ink); font-weight: 600; }
@@ -886,3 +889,119 @@ fieldset.calc__step[hidden] { display: none; }
   .section { padding: 0; }
   @page { margin: 14mm; }
 }
+
+/* =========================================================
+   17. Feinschliff
+   Tiefe, Bewegung und Reaktion auf Eingaben. Ausschliesslich
+   visuell – an der Struktur der Seiten ändert sich nichts.
+   ========================================================= */
+
+/* ---------- Textur für dunkle Flächen ---------- */
+:root {
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.cta-band::after, .site-footer::after, .calc__result::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: var(--noise); background-size: 140px 140px;
+  opacity: .05; mix-blend-mode: overlay;
+}
+.site-footer { position: relative; overflow: hidden; }
+.calc__result { position: sticky; }
+
+/* ---------- Ruhig treibende Lichter im Hero ---------- */
+.hero::before, .hero::after {
+  content: ""; position: absolute; border-radius: 50%; pointer-events: none;
+  filter: blur(70px); opacity: .5; z-index: 0;
+}
+.hero::before {
+  width: 460px; height: 460px; top: -160px; right: -80px;
+  background: radial-gradient(circle, rgba(37,129,255,.5), transparent 68%);
+  animation: drift 26s ease-in-out infinite;
+}
+.hero::after {
+  width: 380px; height: 380px; bottom: -170px; left: -110px;
+  background: radial-gradient(circle, rgba(38,206,177,.48), transparent 68%);
+  animation: drift 32s ease-in-out infinite reverse;
+}
+.hero > .container { position: relative; z-index: 1; }
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-38px, 30px, 0) scale(1.08); }
+}
+
+/* ---------- Karten: Verlaufskante beim Überfahren ---------- */
+.card { position: relative; overflow: hidden; }
+.card::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 3px;
+  background: var(--grad); transform: scaleX(0); transform-origin: left center;
+  transition: transform .38s cubic-bezier(.22, .9, .3, 1);
+}
+a.card:hover::before, a.card:focus-visible::before { transform: scaleX(1); }
+a.card:hover { box-shadow: 0 18px 44px rgba(12, 27, 51, .13); border-color: #C9DAF0; }
+a.card:hover .card__icon { transform: scale(1.06) rotate(-2deg); }
+.card__icon { transition: background .22s ease, color .22s ease, transform .28s cubic-bezier(.22, .9, .3, 1); }
+
+/* ---------- Schimmer auf der Hauptaktion ---------- */
+.btn--grad { overflow: hidden; isolation: isolate; }
+.btn--grad::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.42), transparent);
+  transform: skewX(-18deg); transition: left .55s cubic-bezier(.22, .9, .3, 1);
+  pointer-events: none;
+}
+.btn--grad:hover::after, .btn--grad:focus-visible::after { left: 115%; }
+@media (prefers-reduced-motion: reduce) { .btn--grad::after { display: none; } }
+
+/* ---------- Kennzahlen und Garantien ---------- */
+.stat, .guarantee { transition: transform .25s cubic-bezier(.22,.9,.3,1), box-shadow .25s ease, border-color .25s ease; }
+.stat:hover, .guarantee:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: #C9DAF0; }
+
+/* ---------- Feine Kante zwischen den Abschnitten ---------- */
+.section--soft, .section--tint { position: relative; }
+.section--soft::before, .section--tint::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37,129,255,.22) 22%, rgba(38,206,177,.22) 78%, transparent);
+}
+
+/* ---------- Links im Fliesstext ---------- */
+.prose a:not(.btn) {
+  text-decoration: none;
+  background-image: linear-gradient(var(--blue-deep), var(--blue-deep));
+  background-size: 100% 1px; background-repeat: no-repeat; background-position: 0 100%;
+  transition: background-size .25s ease, background-image .25s ease;
+  padding-bottom: 1px;
+}
+.prose a:not(.btn):hover {
+  background-image: var(--grad); background-size: 100% 2px;
+}
+
+/* ---------- Gestaffeltes Einblenden von Rasterinhalten ---------- */
+@keyframes riseIn { from { opacity: 0; transform: translateY(16px); } }
+.js .reveal.is-visible > .card,
+.js .reveal.is-visible > .guarantee,
+.js .reveal.is-visible > .stat,
+.js .reveal.is-visible > .steps > li {
+  animation: riseIn .52s cubic-bezier(.22, .9, .3, 1) backwards;
+}
+.js .reveal.is-visible > *:nth-child(2) { animation-delay: .06s; }
+.js .reveal.is-visible > *:nth-child(3) { animation-delay: .12s; }
+.js .reveal.is-visible > *:nth-child(4) { animation-delay: .18s; }
+.js .reveal.is-visible > *:nth-child(5) { animation-delay: .24s; }
+.js .reveal.is-visible > *:nth-child(6) { animation-delay: .30s; }
+
+/* ---------- Reiter und FAQ ---------- */
+.tab { transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.tab:hover { transform: translateY(-1px); }
+.faq details { transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+.faq summary:hover { color: var(--blue-deep); }
+
+/* ---------- Formularfelder ---------- */
+input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+  transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+input[type="text"]:hover, input[type="email"]:hover, input[type="tel"]:hover,
+select:hover, textarea:hover { border-color: #AFC4DE; }
+
+/* ---------- Kopfzeile beim Scrollen ---------- */
+.site-header { transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+.site-header.is-stuck { background: rgba(255, 255, 255, .97); }

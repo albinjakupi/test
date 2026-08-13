@@ -302,6 +302,18 @@ Was danach zu tun ist: Abschnitt 4 der Datenschutzerklärung ergänzen (dort ste
 heute ausdrücklich, dass keine Analysedienste eingebunden sind) und den Hinweis
 «Keine Cookies, kein Tracking» in der Fusszeile prüfen.
 
+## Gestaltung
+
+Abschnitt 17 in `css/style.css` («Feinschliff») enthält alles, was rein
+visuell wirkt: die treibenden Lichter im Hero, die Verlaufskante auf Karten
+beim Überfahren, den Schimmer auf der Hauptaktion, die feine Textur auf
+dunklen Flächen und das gestaffelte Einblenden von Rasterinhalten. Der Block
+lässt sich vollständig löschen, ohne dass Struktur oder Funktion leiden – das
+ist Absicht.
+
+Sämtliche Bewegung hält sich an `prefers-reduced-motion`: Wer im
+Betriebssystem reduzierte Bewegung eingestellt hat, sieht eine ruhige Seite.
+
 ## Barrierefreiheit und Technik
 
 - Semantische Struktur mit `header`/`main`/`footer`, Sprunglink zum Inhalt

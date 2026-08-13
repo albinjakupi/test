@@ -21,10 +21,10 @@ MOBILE_CTA = MOBILE_CTA.group(1) if MOBILE_CTA else re.search(
 
 HEADER = HEADER.replace(' aria-current="page"', '')
 
-ICON_CHECK = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" '
+ICON_CHECK = ('<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" '
               'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
               '<path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/><path d="m8.5 12.2 2.4 2.4 4.6-4.9"/></svg>')
-ICON_ARROW = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+ICON_ARROW = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
               'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
               '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>')
 
@@ -54,7 +54,7 @@ ICONS = {
 
 
 def icon(name, sw="1.7"):
-    return ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + sw +
+    return ('<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + sw +
             '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[name] + '</svg>')
 
 

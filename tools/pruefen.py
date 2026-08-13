@@ -58,6 +58,11 @@ for f in sorted(glob.glob("*.html")):
         if not ref.startswith(("http", "data:")) and not os.path.exists(ref):
             add(f, "Datei", "fehlt: " + ref)
 
+    # --- Symbole: ohne eigene Masse blähen sich SVG im Fliesstext auf ---
+    for svg in re.findall(r"<svg[^>]*>", h):
+        if "width=" not in svg or "height=" not in svg:
+            add(f, "Symbol", "svg ohne width/height: " + svg[:70])
+
     # --- Bilder ---
     for img in re.findall(r"<img[^>]*>", h):
         if "alt=" not in img:
