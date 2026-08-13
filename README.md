@@ -54,6 +54,8 @@ assets/icon-192.png, icon-512.png, apple-touch-icon.png   App-Symbole
 assets/illu-vorher.svg        Illustration für den Vorher/Nachher-Regler
 assets/illu-nachher.svg       dieselbe Szene nach der Reinigung
 assets/illu-buero.svg …       sechs Szenen-Illustrationen für die Leistungsseiten
+docs/veroeffentlichen.md      Anleitung: Hosting, Domain, Formular, Google
+docs/texte-aendern.md         Anleitung: welcher Text in welcher Datei steht
 docs/fotoguide.md             Aufnahmeliste und Regeln für eigene Fotos
 tools/                        Hilfsskripte (Generator, Prüfung, Vorschau) – siehe tools/README.md
 assets/fonts/                 Outfit und Source Sans 3, lokal eingebunden
@@ -69,8 +71,14 @@ Suchen-und-Ersetzen über alle `.html`-Dateien.
 ## Noch offen: diese Angaben ersetzen
 
 Firmenname, Rechtsform, Adresse und Einsatzgebiet sind eingetragen. Diese
-Platzhalter fehlen noch – am einfachsten per Suchen-und-Ersetzen über alle
-Dateien:
+Platzhalter fehlen noch. Sie stehen an rund 400 Stellen – deshalb nicht von
+Hand ersetzen, sondern mit `tools/stammdaten.py`:
+
+```bash
+python3 tools/stammdaten.py --telefon "041 555 12 34" --inhaber "Vorname Name" \
+                            --uid "CHE-123.456.789 MWST"           # Probelauf
+python3 tools/stammdaten.py --telefon "041 555 12 34" --anwenden   # schreibt
+```
 
 | Platzhalter | Bedeutung |
 |---|---|
@@ -287,8 +295,15 @@ Es müssen nur die Dateien auf den Server – kein Build, kein Node.
 - **GitHub Pages**: In den Repository-Einstellungen unter *Pages* den Branch
   wählen und als Ordner `/ (root)` angeben.
 
-Nach dem Aufschalten die Domain in `sitemap.xml`, `robots.txt` und in den
-`canonical`-Links der HTML-Dateien anpassen.
+Die Domain in `sitemap.xml`, `robots.txt` und in den `canonical`-Links ändert
+`python3 tools/stammdaten.py --domain … --anwenden` in einem Durchgang.
+
+**Ausführliche Anleitungen:**
+
+- [`docs/veroeffentlichen.md`](docs/veroeffentlichen.md) – Hosting im Vergleich,
+  Domain, HTTPS, Formularempfang, Google-Eintrag
+- [`docs/texte-aendern.md`](docs/texte-aendern.md) – welcher Text in welcher
+  Datei steht und wie man ihn gefahrlos ändert
 
 ## Besucherzahlen messen (optional)
 

@@ -49,6 +49,31 @@ die Ratgeber-Beiträge in `RATGEBER`, die Checkliste in `CL_GRUPPEN`.
 > mehr laufen lassen, sonst werden die Änderungen überschrieben. Beides
 > gleichzeitig geht nicht.
 
+## `stammdaten.py` – Telefon, Domain, Inhaber, UID ersetzen
+
+Telefonnummer, E-Mail-Domain, Inhabername und UID stehen an rund 400 Stellen:
+Kopfzeile, Footer, mobile Leiste, Impressum, strukturierte Daten, `sitemap.xml`,
+`robots.txt` und im Generator selbst. Von Hand vergisst man zuverlässig eine.
+
+```bash
+python3 tools/stammdaten.py                                   # zeigt den Stand
+python3 tools/stammdaten.py --telefon "041 555 12 34"         # Probelauf
+python3 tools/stammdaten.py --telefon "041 555 12 34" --anwenden
+```
+
+Schalter: `--telefon`, `--tel`, `--domain`, `--inhaber`, `--uid`. Ohne
+`--anwenden` wird nichts geschrieben, sondern nur aufgelistet, welche Datei wie
+oft betroffen wäre. Die `tel:`-Form wird aus der Telefonnummer abgeleitet
+(`041 555 12 34` → `+41415551234`), lässt sich mit `--tel` aber überschreiben.
+
+Das Skript merkt sich den zuletzt gesetzten Stand in `tools/.stammdaten.json`
+und kann deshalb mehrfach laufen – beim zweiten Mal ersetzt es die aktuelle
+Nummer, nicht mehr den ursprünglichen Platzhalter. Zum Schluss prüft es, dass
+vom alten Stand nichts übrig geblieben ist.
+
+Markdown-Dateien werden bewusst nicht angefasst: In den Anleitungen stehen die
+Platzhalter als Beispiel, sie sollen dort erhalten bleiben.
+
 ## `illustrationen.py` – Szenen neu zeichnen
 
 Erzeugt die sechs Szenen-Illustrationen in `assets/`. Farben und Formen stehen
