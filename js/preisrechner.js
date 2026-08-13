@@ -363,6 +363,13 @@
   }
 
   /* ---------- Ergebnis ---------- */
+  function puls() {
+    if (!elPrice) { return; }
+    elPrice.classList.remove('is-updated');
+    void elPrice.offsetWidth;          // Neustart der Animation erzwingen
+    elPrice.classList.add('is-updated');
+  }
+
   function rechne() {
     var l = aktuelle();
     var res = l.rechne.call(l, state);
@@ -413,10 +420,11 @@
       renderDetails();
       renderExtras();
       rechne();
+      puls();
       return;
     }
-    if (t.dataset.gruppe) { state[t.dataset.gruppe] = t.value; rechne(); return; }
-    if (t.dataset.extra) { state[t.dataset.extra] = t.checked; rechne(); return; }
+    if (t.dataset.gruppe) { state[t.dataset.gruppe] = t.value; rechne(); puls(); return; }
+    if (t.dataset.extra) { state[t.dataset.extra] = t.checked; rechne(); puls(); return; }
   });
 
   form.addEventListener('input', function (e) {

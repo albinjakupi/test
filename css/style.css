@@ -1005,3 +1005,95 @@ select:hover, textarea:hover { border-color: #AFC4DE; }
 /* ---------- Kopfzeile beim Scrollen ---------- */
 .site-header { transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
 .site-header.is-stuck { background: rgba(255, 255, 255, .97); }
+
+/* =========================================================
+   18. Bewegung
+   Seitenübergänge, Auftritt beim Laden, Reaktionen beim Öffnen.
+   Browser ohne Unterstützung zeigen die Seite ohne Übergang –
+   es geht nichts verloren.
+   ========================================================= */
+
+/* ---------- Übergang zwischen zwei Seiten ---------- */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) { animation: seiteRaus .2s ease both; }
+::view-transition-new(root) { animation: seiteRein .34s cubic-bezier(.22, .9, .3, 1) both; }
+@keyframes seiteRaus { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes seiteRein { from { opacity: 0; transform: translateY(12px); } }
+
+/* Kopfzeile und Aktionsleiste bleiben beim Wechsel stehen, statt mitzublenden */
+.site-header { view-transition-name: kopfzeile; }
+.mobile-cta { view-transition-name: aktionsleiste; }
+
+/* ---------- Auftritt der Startseite ---------- */
+@keyframes auftritt { from { opacity: 0; transform: translateY(20px); } }
+.hero .eyebrow,
+.hero h1,
+.hero__lead,
+.hero__points li,
+.hero .btn-row,
+.hero__pills,
+.quickquote {
+  animation: auftritt .62s cubic-bezier(.22, .9, .3, 1) backwards;
+}
+.hero h1 { animation-delay: .05s; }
+.hero__lead { animation-delay: .11s; }
+.hero__points li:nth-child(1) { animation-delay: .17s; }
+.hero__points li:nth-child(2) { animation-delay: .22s; }
+.hero__points li:nth-child(3) { animation-delay: .27s; }
+.hero .btn-row { animation-delay: .32s; }
+.hero__pills { animation-delay: .38s; }
+.quickquote { animation-delay: .16s; }
+
+/* Auch die Seitenköpfe der Unterseiten treten kurz an */
+.pagehead .eyebrow, .pagehead h1, .pagehead > .container > p, .pagehead .btn-row {
+  animation: auftritt .5s cubic-bezier(.22, .9, .3, 1) backwards;
+}
+.pagehead h1 { animation-delay: .05s; }
+.pagehead > .container > p { animation-delay: .1s; }
+.pagehead .btn-row { animation-delay: .16s; }
+
+/* ---------- Mobiles Menü ---------- */
+@keyframes menueAuf { from { opacity: 0; transform: translateY(-10px); } }
+.nav__drawer.is-open { animation: menueAuf .26s cubic-bezier(.22, .9, .3, 1); }
+.nav__drawer a { transition: background .18s ease, color .18s ease, padding-left .18s ease; }
+.nav__drawer a:hover { padding-left: 20px; }
+
+/* ---------- Aufklappende Antworten ---------- */
+@keyframes antwortAuf { from { opacity: 0; transform: translateY(-6px); } }
+.faq details[open] > *:not(summary) { animation: antwortAuf .3s cubic-bezier(.22, .9, .3, 1) both; }
+.faq summary::after { transition: transform .28s cubic-bezier(.22, .9, .3, 1); }
+
+/* ---------- Bilder ziehen beim Hereinscrollen leicht auf ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .media img {
+      animation: bildAuf linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 42%;
+    }
+    @keyframes bildAuf {
+      from { transform: scale(1.07) translateY(12px); }
+      to { transform: none; }
+    }
+  }
+}
+
+/* ---------- Preis im Rechner ---------- */
+@keyframes preisPuls { 0% { transform: scale(1); } 42% { transform: scale(1.035); } 100% { transform: scale(1); } }
+.calc__price { transform-origin: left center; }
+.calc__price.is-updated { animation: preisPuls .34s cubic-bezier(.22, .9, .3, 1); }
+
+/* ---------- Fortschritt der Checkliste ---------- */
+.cl__item input { transition: background .18s ease, border-color .18s ease, transform .18s cubic-bezier(.34, 1.7, .5, 1); }
+.cl__item input:checked { transform: scale(1.08); }
+.cl__item span { transition: color .2s ease; }
+
+/* ---------- Ruhe für alle, die sie eingestellt haben ---------- */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  .hero .eyebrow, .hero h1, .hero__lead, .hero__points li, .hero .btn-row, .hero__pills,
+  .quickquote, .pagehead .eyebrow, .pagehead h1, .pagehead > .container > p, .pagehead .btn-row {
+    animation: none !important;
+  }
+}

@@ -314,6 +314,28 @@ ist Absicht.
 Sämtliche Bewegung hält sich an `prefers-reduced-motion`: Wer im
 Betriebssystem reduzierte Bewegung eingestellt hat, sieht eine ruhige Seite.
 
+## Bewegung und Seitenübergänge
+
+Abschnitt 18 in `css/style.css` bündelt alle Bewegung:
+
+| Was | Wo |
+|---|---|
+| Weicher Übergang beim Seitenwechsel | alle Seiten, über `@view-transition` |
+| Gestaffelter Auftritt von Titel, Text und Karte | Startseite und Seitenköpfe |
+| Aufklappen des mobilen Menüs | überall |
+| Einblenden der FAQ-Antworten | überall |
+| Bilder ziehen beim Hereinscrollen leicht auf | Leistungsseiten |
+| Preis pulsiert bei Auswahländerung | Preisrechner |
+
+Die Seitenübergänge nutzen die View-Transitions-Schnittstelle des Browsers.
+Kopfzeile und mobile Aktionsleiste sind davon ausgenommen und bleiben beim
+Wechsel stehen – das lässt den Wechsel ruhiger wirken. Browser ohne
+Unterstützung zeigen den Seitenwechsel wie bisher; es geht nichts verloren
+und es wird kein zusätzliches JavaScript geladen.
+
+Wer im Betriebssystem «Bewegung reduzieren» eingestellt hat, bekommt alles
+davon ausgeschaltet – inklusive der Seitenübergänge.
+
 ## Barrierefreiheit und Technik
 
 - Semantische Struktur mit `header`/`main`/`footer`, Sprunglink zum Inhalt

@@ -158,7 +158,14 @@ PREVIEW_JS = """
   function route() {
     var hash = window.location.hash;
     if (hash.indexOf('#/') !== 0) { return; }   // normale Anker wie #offerte-form
-    show(hash.slice(2) || DEFAULT);
+    var key = hash.slice(2) || DEFAULT;
+    // In der Vorschau liegen alle Seiten in einem Dokument. Damit der
+    // Seitenübergang trotzdem sichtbar wird, wird er hier von Hand ausgelöst.
+    if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.startViewTransition(function () { show(key); });
+    } else {
+      show(key);
+    }
   }
 
   window.addEventListener('hashchange', route);
