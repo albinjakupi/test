@@ -51,6 +51,8 @@ assets/og-cleeno.png          Vorschaubild beim Teilen (WhatsApp, LinkedIn, Face
 assets/icon-192.png, icon-512.png, apple-touch-icon.png   App-Symbole
 assets/illu-vorher.svg        Illustration für den Vorher/Nachher-Regler
 assets/illu-nachher.svg       dieselbe Szene nach der Reinigung
+assets/illu-buero.svg …       sechs Szenen-Illustrationen für die Leistungsseiten
+docs/fotoguide.md             Aufnahmeliste und Regeln für eigene Fotos
 assets/fonts/                 Outfit und Source Sans 3, lokal eingebunden
 assets/img/                   Ablage für eigene Fotos
 robots.txt, sitemap.xml       Für Suchmaschinen
@@ -220,6 +222,10 @@ in `assets/img/` ablegen und den Block ersetzen:
 Empfehlung: Breite ca. 1600 px, als WebP oder JPEG mit rund 150–250 KB. Jedes
 Bild braucht ein aussagekräftiges `alt`-Attribut. Echte Fotos vom eigenen Team
 wirken deutlich stärker als Stockbilder – gerade bei einem Familienbetrieb.
+
+Alle Bildplätze zeigen zurzeit selbst gezeichnete Illustrationen im Markenstil
+– sie geben sich bewusst nicht als Fotografie aus. Welche Aufnahmen die Website
+braucht und worauf rechtlich zu achten ist, steht in **`docs/fotoguide.md`**.
 
 **Vorher/Nachher:** Der Regler auf der Startseite zeigt zurzeit zwei
 Illustrationen. Sobald echte Aufnahmen vorliegen, ersetzen Sie einfach die beiden

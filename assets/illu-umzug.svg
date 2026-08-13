@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration gestapelter Umzugskartons in einer leeren Wohnung"><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF3FC"/><stop offset="1" stop-color="#D6E8F8"/></linearGradient><linearGradient id="mb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#26CEB1"/><stop offset="1" stop-color="#2581FF"/></linearGradient></defs><rect width="800" height="600" fill="url(#bg)"/>
+<rect y="430" width="800" height="170" fill="#E6EDF5"/>
+<rect x="70" y="120" width="150" height="200" rx="8" fill="#BBDCF7" opacity=".8"/>
+<rect x="230" y="300" width="200" height="130" rx="6" fill="#E4B98A"/>
+<rect x="230" y="300" width="200" height="130" rx="6" fill="#0C1B33" opacity=".08"/>
+<rect x="310" y="300" width="40" height="130" fill="#FFFFFF" opacity=".55"/>
+<rect x="230" y="296" width="200" height="14" rx="5" fill="#FFFFFF" opacity=".6"/>
+<rect x="258" y="180" width="150" height="120" rx="6" fill="#EFC79B"/>
+<rect x="316" y="180" width="34" height="120" fill="#FFFFFF" opacity=".55"/>
+<rect x="258" y="176" width="150" height="12" rx="4" fill="#FFFFFF" opacity=".6"/>
+<rect x="452" y="340" width="160" height="90" rx="6" fill="#E4B98A"/>
+<rect x="514" y="340" width="34" height="90" fill="#FFFFFF" opacity=".55"/>
+<rect x="600" y="250" width="52" height="180" rx="26" fill="#26AFD0" opacity=".55"/>
+<rect x="612" y="250" width="28" height="180" rx="14" fill="#FFFFFF" opacity=".5"/>
+<circle cx="700" cy="392" r="38" fill="#26CEB1" opacity=".3"/>
+<path d="M700 352c22 20 30 38 20 54-12 18-38 18-50 0-10-16-4-34 30-54Z" fill="#26CEB1"/>
+<rect x="684" y="408" width="34" height="46" rx="7" fill="#FFFFFF"/>
+<g transform="translate(150 250) scale(1)" fill="#2581FF" opacity=".3"><path d="M0 -22 L5.5 -5.5 L22 0 L5.5 5.5 L0 22 L-5.5 5.5 L-22 0 L-5.5 -5.5 Z"/></g>
+<g transform="translate(520 150) scale(.8)" fill="#26CEB1" opacity=".5"><path d="M0 -22 L5.5 -5.5 L22 0 L5.5 5.5 L0 22 L-5.5 5.5 L-22 0 L-5.5 -5.5 Z"/></g>
+</svg>
