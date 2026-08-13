@@ -37,6 +37,8 @@ ratgeber.html                 Übersicht der Ratgeber-Beiträge
 ratgeber-wohnungsabgabe.html  Checkliste für die Wohnungsübergabe
 ratgeber-umzugsreinigung-kosten.html   Preise und Kostenfaktoren
 ratgeber-reinigungsplan-buero.html     Reinigungsplan mit Vorlage
+checkliste.html               Druckbare Checkliste zur Wohnungsabgabe (47 Punkte)
+danke.html                    Bestätigung nach dem Absenden des Formulars
 404.html                      Fehlerseite
 _headers                      Sicherheits- und Cache-Regeln (Netlify, Cloudflare)
 site.webmanifest              App-Symbol und Name beim Speichern auf dem Startbildschirm
@@ -53,6 +55,7 @@ assets/illu-vorher.svg        Illustration für den Vorher/Nachher-Regler
 assets/illu-nachher.svg       dieselbe Szene nach der Reinigung
 assets/illu-buero.svg …       sechs Szenen-Illustrationen für die Leistungsseiten
 docs/fotoguide.md             Aufnahmeliste und Regeln für eigene Fotos
+tools/                        Hilfsskripte (Generator, Prüfung, Vorschau) – siehe tools/README.md
 assets/fonts/                 Outfit und Source Sans 3, lokal eingebunden
 assets/img/                   Ablage für eigene Fotos
 robots.txt, sitemap.xml       Für Suchmaschinen
@@ -142,11 +145,30 @@ kommerziell verwendet werden. Details in `assets/fonts/README.md`.
 | Sprungnavigation | Leistungsseiten | Klebt unter dem Kopf und markiert den sichtbaren Abschnitt |
 | Fortschrittsbalken | alle Seiten | Zeigt die Leseposition am oberen Rand |
 | Zähler | Startseite, Über uns | Zahlen laufen beim Sichtbarwerden hoch |
+| Checkliste | `checkliste.html` | 47 Punkte zum Abhaken, Fortschritt bleibt gespeichert, druckbar |
 
 Alle Effekte respektieren `prefers-reduced-motion`, und ohne JavaScript bleiben
 sämtliche Inhalte lesbar: Die Reiter zeigen dann den ersten Bereich, der
 Vergleichsregler steht in der Mitte, und statt des Rechners erscheint ein
 Hinweis mit Link auf die Richtpreise und das Offertformular.
+
+## Checkliste und Danke-Seite
+
+`checkliste.html` ist mehr als ein Beitrag: 47 Kontrollpunkte zum Abhaken, mit
+Fortschrittsbalken. Der Stand wird im Browser des Besuchers gespeichert
+(`localStorage`) – wer die Seite Tage später wieder öffnet, findet die Häkchen
+vor. Es werden keine Daten an uns übertragen; ein Cookie-Hinweis ist dafür
+nicht nötig, weil die Speicherung ausschliesslich lokal und funktional ist.
+
+Der Druckknopf erzeugt eine zweiseitige Fassung im Zweispaltensatz mit Logo und
+Kontaktzeile – gedacht für den Rundgang durch die leere Wohnung. Solche
+Werkzeuge werden verlinkt und weitergegeben; das ist die günstigste Werbung,
+die es gibt.
+
+Nach dem Absenden des Offertformulars landen Besucher auf `danke.html`. Das ist
+nicht nur freundlicher als eine Statusmeldung, sondern die Voraussetzung für
+Erfolgsmessung: Wer später Google Ads schaltet, zählt genau diesen Seitenaufruf
+als Anfrage.
 
 ## Preisrechner
 
@@ -267,6 +289,18 @@ Es müssen nur die Dateien auf den Server – kein Build, kein Node.
 
 Nach dem Aufschalten die Domain in `sitemap.xml`, `robots.txt` und in den
 `canonical`-Links der HTML-Dateien anpassen.
+
+## Besucherzahlen messen (optional)
+
+Die Website enthält bewusst keine Analyse-Werkzeuge. Wer trotzdem wissen will,
+was funktioniert, nimmt am besten einen Dienst ohne Cookies – dann bleibt der
+Cookie-Banner aus und die Datenschutzerklärung braucht nur einen kurzen Absatz.
+Der Aufruf von `danke.html` ist dabei das wichtigste Ereignis: Er entspricht
+einer eingegangenen Anfrage.
+
+Was danach zu tun ist: Abschnitt 4 der Datenschutzerklärung ergänzen (dort steht
+heute ausdrücklich, dass keine Analysedienste eingebunden sind) und den Hinweis
+«Keine Cookies, kein Tracking» in der Fusszeile prüfen.
 
 ## Barrierefreiheit und Technik
 

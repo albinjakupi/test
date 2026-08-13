@@ -10,7 +10,8 @@
    7.  Vorher/Nachher-Vergleich
    8.  Sprungnavigation mit aktivem Abschnitt
    9.  Jahreszahl und Vorbelegung aus der URL
-   10. Offertformular
+   10. Checkliste mit gespeichertem Fortschritt
+   11. Offertformular
    ========================================================= */
 (function () {
   'use strict';
@@ -232,7 +233,54 @@
     }
   });
 
-  /* ---------- 10. Offertformular ---------- */
+  /* ---------- 10. Checkliste mit gespeichertem Fortschritt ---------- */
+  var checkliste = document.querySelector('[data-checkliste]');
+  if (checkliste) {
+    var kaesten = Array.prototype.slice.call(checkliste.querySelectorAll('input[type="checkbox"]'));
+    var meter = document.querySelector('.cl__meter span');
+    var zaehler = document.querySelector('.cl__count');
+    var speicher = 'cleeno-checkliste';
+
+    var lesen = function () {
+      try { return JSON.parse(window.localStorage.getItem(speicher)) || {}; }
+      catch (e) { return {}; }
+    };
+    var schreiben = function (daten) {
+      try { window.localStorage.setItem(speicher, JSON.stringify(daten)); } catch (e) { /* privater Modus */ }
+    };
+
+    var aktualisieren = function () {
+      var erledigt = kaesten.filter(function (k) { return k.checked; }).length;
+      if (meter) { meter.style.width = (erledigt / kaesten.length * 100) + '%'; }
+      if (zaehler) { zaehler.textContent = erledigt + ' von ' + kaesten.length + ' erledigt'; }
+    };
+
+    var gespeichert = lesen();
+    kaesten.forEach(function (k) { if (gespeichert[k.id]) { k.checked = true; } });
+    aktualisieren();
+
+    checkliste.addEventListener('change', function (e) {
+      if (e.target.type !== 'checkbox') { return; }
+      var daten = lesen();
+      if (e.target.checked) { daten[e.target.id] = 1; } else { delete daten[e.target.id]; }
+      schreiben(daten);
+      aktualisieren();
+    });
+
+    var zuruecksetzen = document.getElementById('cl-reset');
+    if (zuruecksetzen) {
+      zuruecksetzen.addEventListener('click', function () {
+        kaesten.forEach(function (k) { k.checked = false; });
+        schreiben({});
+        aktualisieren();
+      });
+    }
+
+    var drucken = document.getElementById('cl-print');
+    if (drucken) { drucken.addEventListener('click', function () { window.print(); }); }
+  }
+
+  /* ---------- 11. Offertformular ---------- */
   var form = document.getElementById('offerte-form');
   if (!form) { return; }
 
@@ -337,6 +385,8 @@
     if (!FORM_ENDPOINT) {
       showStatus('Ihr E-Mail-Programm öffnet sich mit der fertigen Anfrage. Alternativ erreichen Sie uns telefonisch.', true);
       window.location.href = buildMailto(data);
+      // Das mailto beendet die Seite nicht – kurz danach zur Bestätigung wechseln.
+      window.setTimeout(function () { window.location.href = 'danke.html'; }, 1200);
       return;
     }
 
@@ -350,6 +400,7 @@
       if (!res.ok) { throw new Error('HTTP ' + res.status); }
       form.reset();
       showStatus('Vielen Dank! Ihre Anfrage ist eingegangen – wir melden uns innert 24 Stunden.', true);
+      window.setTimeout(function () { window.location.href = 'danke.html'; }, 600);
     }).catch(function () {
       showStatus('Der Versand hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an ' + FALLBACK_MAIL + '.', false);
     }).finally(function () {

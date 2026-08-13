@@ -816,3 +816,73 @@ fieldset.calc__step[hidden] { display: none; }
 .calc__result .btn { margin-top: 22px; }
 
 @media (max-width: 979px) { .calc__result { position: static; } }
+
+/* =========================================================
+   16. Checkliste zum Abhaken und Ausdrucken
+   ========================================================= */
+.cl__bar {
+  position: sticky; top: 80px; z-index: 70;
+  background: rgba(255,255,255,.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line); padding: 14px 0;
+}
+.cl__bar .container { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.cl__meter { flex: 1 1 220px; height: 10px; border-radius: 999px; background: var(--bg-soft); overflow: hidden; min-width: 160px; }
+.cl__meter span { display: block; height: 100%; width: 0; background: var(--grad); transition: width .3s ease; }
+.cl__count {
+  font-family: var(--font-display); font-weight: 700; color: var(--ink);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.cl__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.cl__groups { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.cl__group {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 26px 24px; box-shadow: var(--shadow-s); break-inside: avoid;
+}
+.cl__group h2 {
+  font-size: 1.2rem; margin-bottom: 16px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 11px;
+}
+.cl__group h2 svg { width: 22px; height: 22px; color: var(--blue-deep); flex: none; }
+.cl__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.cl__list li { margin: 0; }
+.cl__item {
+  display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+  padding: 9px 10px; border-radius: var(--radius-s); font-size: .99rem; color: var(--ink-2);
+  transition: background .15s ease;
+}
+.cl__item:hover { background: var(--bg-soft); }
+.cl__item input {
+  appearance: none; width: 23px; height: 23px; flex: none; margin: 1px 0 0;
+  border: 2px solid var(--line-strong); border-radius: 7px; background: #fff;
+  cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.cl__item input:checked { background: var(--mint-ink); border-color: var(--mint-ink); }
+.cl__item input:checked::after {
+  content: ""; display: block; width: 100%; height: 100%;
+  background: #fff;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7'/%3E%3C/svg%3E") center / 78% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7'/%3E%3C/svg%3E") center / 78% no-repeat;
+}
+.cl__item input:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.cl__item input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line-strong); }
+
+.cl__print-head { display: none; }
+
+@media print {
+  .cl__bar, .subnav, .progress { display: none !important; }
+  .cl__print-head { display: block; margin-bottom: 18pt; }
+  .cl__print-head img { width: 34mm; }
+  .cl__print-head p { font-size: 9pt; color: #555; margin-top: 6pt; }
+  .cl__groups { display: block; columns: 2; column-gap: 14mm; }
+  .cl__group { border: 0; box-shadow: none; padding: 0 0 10pt; margin-bottom: 10pt; }
+  .cl__group h2 { font-size: 12pt; margin-bottom: 6pt; padding-bottom: 4pt; }
+  .cl__item { padding: 2pt 0; font-size: 9.5pt; }
+  .cl__item input { width: 11pt; height: 11pt; border: 1pt solid #666; }
+  .cl__item input:checked { background: #fff; }
+  .cl__item input:checked + span { color: #000; text-decoration: none; }
+  .pagehead { padding: 0 0 8pt; background: none; border: 0; }
+  .pagehead p, .breadcrumb, .eyebrow { display: none; }
+  .section { padding: 0; }
+  @page { margin: 14mm; }
+}
