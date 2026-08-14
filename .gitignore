@@ -1,0 +1,5 @@
+# Von tools/vorschau-buendeln.py erzeugt
+tools/vorschau.html
+
+# Von tools/stammdaten.py erzeugt (zuletzt gesetzte Stammdaten)
+tools/.stammdaten.json

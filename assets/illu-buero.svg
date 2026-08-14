@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration eines gereinigten Büroarbeitsplatzes"><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF3FC"/><stop offset="1" stop-color="#D6E8F8"/></linearGradient><linearGradient id="mb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#26CEB1"/><stop offset="1" stop-color="#2581FF"/></linearGradient></defs><rect width="800" height="600" fill="url(#bg)"/>
+<rect y="430" width="800" height="170" fill="#E6EDF5"/>
+<rect x="500" y="70" width="250" height="230" rx="10" fill="#BBDCF7"/>
+<rect x="500" y="70" width="250" height="230" rx="10" fill="#FFFFFF" opacity=".45"/>
+<path d="M500 300 L610 70 h70 L560 300 Z" fill="#FFFFFF" opacity=".5"/>
+<rect x="618" y="70" width="7" height="230" fill="#CBD9E8"/>
+<rect x="500" y="182" width="250" height="7" fill="#CBD9E8"/>
+<rect x="120" y="430" width="420" height="16" rx="6" fill="#0C1B33"/>
+<rect x="146" y="446" width="16" height="120" rx="6" fill="#0C1B33" opacity=".8"/>
+<rect x="498" y="446" width="16" height="120" rx="6" fill="#0C1B33" opacity=".8"/>
+<rect x="250" y="300" width="200" height="120" rx="8" fill="#0C1B33"/>
+<rect x="262" y="312" width="176" height="96" rx="4" fill="url(#mb)"/>
+<rect x="335" y="420" width="30" height="12" fill="#0C1B33"/>
+<rect x="300" y="428" width="100" height="10" rx="5" fill="#0C1B33"/>
+<rect x="150" y="352" width="86" height="26" rx="12" fill="#26AFD0"/>
+<rect x="182" y="378" width="16" height="52" rx="8" fill="#0C1B33"/>
+<rect x="150" y="290" width="20" height="70" rx="10" fill="#26AFD0" opacity=".8"/>
+<rect x="160" y="392" width="70" height="24" rx="6" fill="#FFFFFF" opacity=".9"/>
+<rect x="168" y="380" width="54" height="14" rx="4" fill="#26AFD0"/>
+<circle cx="640" cy="470" r="46" fill="#26CEB1" opacity=".25"/>
+<path d="M640 430c26 22 34 44 22 62-14 20-44 20-58 0-12-18-4-40 36-62Z" fill="#26CEB1"/>
+<rect x="620" y="492" width="42" height="60" rx="8" fill="#FFFFFF"/>
+<g transform="translate(200 150) scale(1.1)" fill="#26CEB1" opacity=".55"><path d="M0 -22 L5.5 -5.5 L22 0 L5.5 5.5 L0 22 L-5.5 5.5 L-22 0 L-5.5 -5.5 Z"/></g>
+<g transform="translate(300 90) scale(.7)" fill="#2581FF" opacity=".35"><path d="M0 -22 L5.5 -5.5 L22 0 L5.5 5.5 L0 22 L-5.5 5.5 L-22 0 L-5.5 -5.5 Z"/></g>
+</svg>
