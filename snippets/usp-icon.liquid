@@ -1,0 +1,87 @@
+{%- comment -%}
+  Icon-Bibliothek (Linien-Icons, 24x24)
+  Aufruf: {% render 'usp-icon', name: 'leaf', size: 34, stroke: 1.3 %}
+{%- endcomment -%}
+
+{%- liquid
+  assign name = name | default: 'leaf'
+  assign size = size | default: 34
+  assign stroke = stroke | default: 1.3
+-%}
+
+{%- unless name == 'none' or name == blank -%}
+<svg
+  class="usp-icon"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="{{ size }}"
+  height="{{ size }}"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="{{ stroke }}"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  vector-effect="non-scaling-stroke"
+  aria-hidden="true"
+  focusable="false"
+>
+  {%- case name -%}
+    {%- when 'leaf' -%}
+      <path d="M4 20c0-9 6.5-15 16-15 0 9.5-6 16-15 16H4Z"/><path d="M4.6 19.4 12.5 11.5"/>
+    {%- when 'feather' -%}
+      <path d="M19.4 4.6c1.6 4.6-.7 9.6-5.4 11.6l-5.4 2.3-2.5-2.5 2.3-5.4C10.4 5.9 15 3.5 19.4 4.6Z"/><path d="M4.5 19.5 10.2 13.8"/><path d="M12.6 7.2 16.8 11.4"/>
+    {%- when 'yarn' -%}
+      <circle cx="12" cy="12" r="8.5"/><path d="M4.3 8.8c4.5 1.1 8.2 4.6 9.7 9"/><path d="M8.1 4.1c3.5 2.3 6 5.9 7 10.1"/><path d="M15.9 4.2c-3.5 2.3-6 5.9-7 10.1"/><path d="M19.7 8.8c-4.5 1.1-8.2 4.6-9.7 9"/>
+    {%- when 'cloud' -%}
+      <path d="M7.5 18.5h9.2a3.8 3.8 0 0 0 .6-7.55A5.8 5.8 0 0 0 6.2 9.8 4.1 4.1 0 0 0 7.5 18.5Z"/>
+    {%- when 'droplet' -%}
+      <path d="M12 3.2c3.3 3.5 5.5 6.6 5.5 9.3a5.5 5.5 0 0 1-11 0c0-2.7 2.2-5.8 5.5-9.3Z"/>
+    {%- when 'washing' -%}
+      <rect x="4.5" y="2.8" width="15" height="18.4" rx="2.2"/><path d="M4.5 8h15"/><circle cx="12" cy="14.6" r="4.2"/><circle cx="7.6" cy="5.4" r=".9" fill="currentColor" stroke="none"/>
+    {%- when 'wind' -%}
+      <path d="M3 8.2h9.8a3 3 0 1 0-3-3"/><path d="M3 12h12.5a3 3 0 1 1-3 3"/><path d="M3 15.8h6.5"/>
+    {%- when 'sun' -%}
+      <circle cx="12" cy="12" r="4"/><path d="M12 2.2v2M12 19.8v2M4.6 4.6 6 6M18 18l1.4 1.4M2.2 12h2M19.8 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/>
+    {%- when 'moon' -%}
+      <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/>
+    {%- when 'heart' -%}
+      <path d="M12 20.3 4.6 13a4.5 4.5 0 0 1 6.4-6.3l1 1 1-1A4.5 4.5 0 0 1 19.4 13L12 20.3Z"/>
+    {%- when 'star' -%}
+      <path d="m12 3.5 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 10l6.1-.9L12 3.5Z"/>
+    {%- when 'sparkles' -%}
+      <path d="M11 3.2 12.7 8l4.8 1.7L12.7 11.4 11 16.2 9.3 11.4 4.5 9.7 9.3 8 11 3.2Z"/><path d="M18 15.2l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/>
+    {%- when 'shield' -%}
+      <path d="M12 2.8 20 5.5v6c0 4.6-3.2 8.3-8 9.7-4.8-1.4-8-5.1-8-9.7v-6L12 2.8Z"/><path d="m8.8 11.8 2.3 2.3 4.1-4.6"/>
+    {%- when 'check' -%}
+      <circle cx="12" cy="12" r="9"/><path d="m7.8 12.3 2.8 2.8 5.6-6.2"/>
+    {%- when 'truck' -%}
+      <path d="M2.8 6.2h10.5v9.6H2.8z"/><path d="M13.3 9.6h3.5l2.9 2.9v3.3h-6.4z"/><circle cx="7" cy="17.8" r="1.8"/><circle cx="16.4" cy="17.8" r="1.8"/><path d="M8.9 17.8h5.7"/>
+    {%- when 'return' -%}
+      <path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.8 4.4V9h-4.6"/>
+    {%- when 'tag' -%}
+      <path d="M11.3 3.2H20v8.7l-8.6 8.6a1.6 1.6 0 0 1-2.3 0l-6.4-6.4a1.6 1.6 0 0 1 0-2.3l8.6-8.6Z"/><circle cx="16.3" cy="7.7" r="1.4"/>
+    {%- when 'percent' -%}
+      <path d="M19 5 5 19"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/>
+    {%- when 'gift' -%}
+      <rect x="3.2" y="8.8" width="17.6" height="12" rx="1.6"/><path d="M3.2 12.9h17.6M12 8.8v12"/><path d="M12 8.8S10.6 3.4 8 3.4a2.7 2.7 0 0 0 0 5.4h4Z"/><path d="M12 8.8s1.4-5.4 4-5.4a2.7 2.7 0 0 1 0 5.4h-4Z"/>
+    {%- when 'sprout' -%}
+      <path d="M12 20.5v-7.4"/><path d="M12 13.1c0-3.3-2.7-6-6-6 0 3.3 2.7 6 6 6Z"/><path d="M12 13.1c0-3.9 3.1-7 7-7 0 3.9-3.1 7-7 7Z"/>
+    {%- when 'award' -%}
+      <circle cx="12" cy="9" r="5.5"/><path d="m8.5 13.8-1.3 7 4.8-2.6 4.8 2.6-1.3-7"/>
+    {%- when 'globe' -%}
+      <circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.8 3.8 5.8 3.8 9s-1.3 6.2-3.8 9c-2.5-2.8-3.8-5.8-3.8-9S9.5 5.8 12 3Z"/>
+    {%- when 'clock' -%}
+      <circle cx="12" cy="12" r="9"/><path d="M12 6.8v5.5l3.4 2"/>
+    {%- when 'lock' -%}
+      <rect x="4.5" y="10.2" width="15" height="10.6" rx="2"/><path d="M8 10.2V7.4a4 4 0 0 1 8 0v2.8"/>
+    {%- when 'shirt' -%}
+      <path d="M8.6 3 4 5.6l1.9 4.1 2.2-1V21h7.8V8.7l2.2 1L20 5.6 15.4 3a3.4 3.4 0 0 1-6.8 0Z"/>
+    {%- when 'thermometer' -%}
+      <path d="M14 14.8V5.5a2 2 0 1 0-4 0v9.3a4 4 0 1 0 4 0Z"/><path d="M12 9.5v6"/>
+    {%- when 'box' -%}
+      <path d="m12 2.8 8.2 4.2v10L12 21.2 3.8 17V7L12 2.8Z"/><path d="M3.8 7 12 11.2 20.2 7M12 11.2v10"/>
+    {%- else -%}
+      <circle cx="12" cy="12" r="9"/><path d="m7.8 12.3 2.8 2.8 5.6-6.2"/>
+  {%- endcase -%}
+</svg>
+{%- endunless -%}

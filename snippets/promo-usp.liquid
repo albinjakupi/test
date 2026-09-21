@@ -1,0 +1,198 @@
+{%- comment -%}
+  Promo-Leiste + USP-Raster
+  ---------------------------------------------------------------------------
+  Aufruf als Section:      {% render 'promo-usp', s: section.settings, uid: section.id, blocks: section.blocks %}
+  Aufruf als Produkt-Block:{% render 'promo-usp', s: block.settings,   uid: block.id %}
+
+  Ohne "blocks" werden die vier festen USP-Felder (usp_1_… bis usp_4_…)
+  aus dem Settings-Objekt gelesen.
+{%- endcomment -%}
+
+{%- liquid
+  assign uid = uid | default: 'promo-usp'
+  assign el_id = 'PromoUsp-' | append: uid
+  assign icon_size = s.icon_size | default: 34
+  assign icon_stroke = s.icon_stroke | default: 1.3
+
+  assign show_promo = false
+  if s.show_promo
+    if s.promo_label != blank or s.promo_text != blank
+      assign show_promo = true
+    endif
+  endif
+-%}
+
+{%- style -%}
+  #{{ el_id }} { display: block; box-sizing: border-box; color: {{ s.usp_text_color }}; }
+  #{{ el_id }} *, #{{ el_id }} *::before, #{{ el_id }} *::after { box-sizing: border-box; }
+
+  #{{ el_id }} .pu__promo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: {{ s.promo_bg }};
+    border: {{ s.promo_border_width }}px solid {{ s.promo_border_color }};
+    border-radius: {{ s.promo_radius }}px;
+    padding: {{ s.promo_padding_y }}px {{ s.promo_padding_x }}px;
+    text-decoration: none;
+    color: {{ s.promo_text_color }};
+    font-size: {{ s.promo_font_size }}px;
+    line-height: 1.35;
+    justify-content: {% if s.promo_alignment == 'center' %}center{% else %}flex-start{% endif %};
+  }
+  #{{ el_id }} a.pu__promo:hover { border-color: {{ s.promo_label_color }}; }
+  #{{ el_id }} .pu__promo-icon { flex: 0 0 auto; color: {{ s.promo_label_color }}; display: flex; }
+  #{{ el_id }} .pu__promo-icon img { width: {{ s.promo_icon_size }}px; height: auto; display: block; }
+  #{{ el_id }} .pu__promo-body { min-width: 0; }
+  #{{ el_id }} .pu__promo-label {
+    font-weight: 700;
+    color: {{ s.promo_label_color }};
+    {% if s.promo_uppercase %}text-transform: uppercase; letter-spacing: 0.03em;{% endif %}
+  }
+  #{{ el_id }} .pu__promo-text strong { font-weight: 700; color: {{ s.promo_label_color }}; }
+
+  #{{ el_id }} .pu__usps {
+    display: grid;
+    grid-template-columns: repeat({{ s.columns_desktop }}, minmax(0, 1fr));
+    column-gap: {{ s.column_gap }}px;
+    row-gap: {{ s.row_gap }}px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  #{{ el_id }} .pu__usps--spaced { margin-top: {{ s.space_between }}px; }
+  #{{ el_id }} .pu__usp {
+    display: flex;
+    align-items: center;
+    gap: {{ s.icon_gap }}px;
+    text-align: left;
+  }
+  #{{ el_id }} .pu__usp-icon {
+    flex: 0 0 {{ icon_size }}px;
+    width: {{ icon_size }}px;
+    height: {{ icon_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ s.usp_icon_color }};
+  }
+  #{{ el_id }} .pu__usp-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  #{{ el_id }} .pu__usp-body { min-width: 0; }
+  #{{ el_id }} .pu__usp-text {
+    display: block;
+    font-size: {{ s.usp_font_size }}px;
+    line-height: 1.35;
+    color: {{ s.usp_text_color }};
+  }
+  #{{ el_id }} .pu__usp-note {
+    display: block;
+    margin-top: 2px;
+    font-size: {{ s.usp_font_size | minus: 2 }}px;
+    line-height: 1.35;
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ el_id }} .pu__usps { grid-template-columns: repeat({{ s.columns_mobile }}, minmax(0, 1fr)); }
+    #{{ el_id }} .pu__promo { font-size: {{ s.promo_font_size | minus: 1 }}px; padding: {{ s.promo_padding_y }}px 14px; }
+  }
+{%- endstyle -%}
+
+<div id="{{ el_id }}" class="promo-usp">
+  {%- if show_promo -%}
+    {%- if s.promo_link != blank -%}
+      <a class="pu__promo" href="{{ s.promo_link }}">
+    {%- else -%}
+      <div class="pu__promo">
+    {%- endif -%}
+
+      {%- if s.promo_image != blank -%}
+        <span class="pu__promo-icon">
+          {{ s.promo_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '30,60,120', alt: '' }}
+        </span>
+      {%- elsif s.promo_icon != 'none' -%}
+        <span class="pu__promo-icon">
+          {% render 'usp-icon', name: s.promo_icon, size: s.promo_icon_size, stroke: icon_stroke %}
+        </span>
+      {%- endif -%}
+
+      <span class="pu__promo-body">
+        {%- if s.promo_label != blank -%}
+          <span class="pu__promo-label">{{ s.promo_label | escape }}</span>{% if s.promo_text != blank %}<span class="pu__promo-sep">: </span>{% endif %}
+        {%- endif -%}
+        {%- if s.promo_text != blank -%}
+          <span class="pu__promo-text">
+            {%- assign promo_parts = s.promo_text | split: '**' -%}
+            {%- for part in promo_parts -%}
+              {%- assign bold = forloop.index0 | modulo: 2 -%}
+              {%- if bold == 1 -%}<strong>{{ part | escape }}</strong>{%- else -%}{{ part | escape }}{%- endif -%}
+            {%- endfor -%}
+          </span>
+        {%- endif -%}
+      </span>
+
+    {%- if s.promo_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+  {%- endif -%}
+
+  {%- if blocks != blank -%}
+    {%- assign usp_count = 0 -%}
+    {%- for b in blocks -%}
+      {%- if b.type == 'usp' -%}{%- assign usp_count = usp_count | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+
+    {%- if usp_count > 0 -%}
+      <ul class="pu__usps{% if show_promo %} pu__usps--spaced{% endif %}">
+        {%- for b in blocks -%}
+          {%- if b.type != 'usp' -%}{%- continue -%}{%- endif -%}
+          <li class="pu__usp" {{ b.shopify_attributes }}>
+            <span class="pu__usp-icon">
+              {%- if b.settings.image != blank -%}
+                {{ b.settings.image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '40,80,160', alt: '' }}
+              {%- else -%}
+                {% render 'usp-icon', name: b.settings.icon, size: icon_size, stroke: icon_stroke %}
+              {%- endif -%}
+            </span>
+            <span class="pu__usp-body">
+              <span class="pu__usp-text">{{ b.settings.text | escape }}</span>
+              {%- if b.settings.note != blank -%}
+                <span class="pu__usp-note">{{ b.settings.note | escape }}</span>
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+  {%- else -%}
+    {%- assign fixed_count = 0 -%}
+    {%- for i in (1..4) -%}
+      {%- assign k = 'usp_' | append: i | append: '_text' -%}
+      {%- if s[k] != blank -%}{%- assign fixed_count = fixed_count | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+
+    {%- if fixed_count > 0 -%}
+      <ul class="pu__usps{% if show_promo %} pu__usps--spaced{% endif %}">
+        {%- for i in (1..4) -%}
+          {%- assign k_text = 'usp_' | append: i | append: '_text' -%}
+          {%- assign k_icon = 'usp_' | append: i | append: '_icon' -%}
+          {%- assign k_image = 'usp_' | append: i | append: '_image' -%}
+          {%- if s[k_text] == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign usp_icon = s[k_icon] -%}
+          {%- assign usp_image = s[k_image] -%}
+          <li class="pu__usp">
+            <span class="pu__usp-icon">
+              {%- if usp_image != blank -%}
+                {{ usp_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '40,80,160', alt: '' }}
+              {%- else -%}
+                {% render 'usp-icon', name: usp_icon, size: icon_size, stroke: icon_stroke %}
+              {%- endif -%}
+            </span>
+            <span class="pu__usp-body">
+              <span class="pu__usp-text">{{ s[k_text] | escape }}</span>
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  {%- endif -%}
+</div>
