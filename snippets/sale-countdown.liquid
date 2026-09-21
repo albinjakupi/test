@@ -1,0 +1,281 @@
+{%- comment -%}
+  Sale-Countdown
+  ---------------------------------------------------------------------------
+  Aufruf:
+    {% render 'sale-countdown', s: section.settings, uid: section.id, product: product %}
+    {% render 'sale-countdown', s: block.settings,   uid: block.id %}
+
+  Erwartet ein Settings-Objekt "s" (siehe Schema in sections/sale-countdown.liquid)
+  und eine eindeutige ID "uid".
+{%- endcomment -%}
+
+{%- liquid
+  assign uid = uid | default: 'sale-countdown'
+  assign el_id = 'SaleCountdown-' | append: uid
+
+  assign show = true
+  if s.only_if_on_sale
+    assign show = false
+    if product != blank
+      if product.compare_at_price_max > product.price_min
+        assign show = true
+      endif
+    endif
+  endif
+
+  assign end_time = s.end_time | strip | default: '23:59'
+  assign ends_at = ''
+  if s.end_date != blank
+    assign end_date = s.end_date | strip
+    assign ends_at = end_date | append: 'T' | append: end_time | append: ':00' | append: s.utc_offset
+  endif
+
+  assign missing_date = false
+  if s.mode == 'fixed' and s.end_date == blank
+    assign missing_date = true
+  endif
+-%}
+
+{%- if show -%}
+  {%- style -%}
+    #{{ el_id }} {
+      display: block;
+      box-sizing: border-box;
+      background: {{ s.bg_color }};
+      color: {{ s.text_color }};
+      border-radius: {{ s.border_radius }}px;
+      padding: 22px 24px;
+      {% if s.show_border %}border: 1px solid {{ s.border_color }};{% endif %}
+      text-align: {{ s.alignment }};
+    }
+    #{{ el_id }} *, #{{ el_id }} *::before, #{{ el_id }} *::after { box-sizing: border-box; }
+    #{{ el_id }} [hidden] { display: none !important; }
+    #{{ el_id }} .sc__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: {% if s.alignment == 'center' %}center{% else %}flex-start{% endif %};
+    }
+    #{{ el_id }} .sc__heading {
+      margin: 0;
+      font-size: {{ s.heading_size }}px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: inherit;
+    }
+    #{{ el_id }} .sc__text {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      opacity: 0.85;
+      max-width: 58ch;
+    }
+    #{{ el_id }} .sc__icon { font-size: 1.1em; margin-right: 8px; }
+    #{{ el_id }} .sc__timer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: {% if s.layout == 'boxed' %}10px{% else %}18px{% endif %};
+      justify-content: {% if s.alignment == 'center' %}center{% else %}flex-start{% endif %};
+      margin: 2px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    #{{ el_id }} .sc__unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-width: 64px;
+      {% if s.layout == 'boxed' %}
+        background: {{ s.box_bg }};
+        color: {{ s.box_text }};
+        border-radius: {{ s.border_radius | at_most: 16 }}px;
+        padding: 10px 12px;
+      {% else %}
+        color: {{ s.box_text }};
+      {% endif %}
+    }
+    #{{ el_id }} .sc__num {
+      font-size: {{ s.number_size }}px;
+      line-height: 1;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    #{{ el_id }} .sc__label {
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+    #{{ el_id }} .sc__button {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 12px 24px;
+      border-radius: {{ s.border_radius }}px;
+      background: {{ s.button_bg }};
+      color: {{ s.button_text }};
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 1;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+    }
+    #{{ el_id }} .sc__button:hover { opacity: 0.85; }
+    #{{ el_id }} .sc__note {
+      margin: 0;
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.06);
+      font-size: 13px;
+    }
+    @media screen and (max-width: 749px) {
+      #{{ el_id }} { padding: 18px; }
+      #{{ el_id }} .sc__heading { font-size: {{ s.heading_size | times: 0.82 | round }}px; }
+      #{{ el_id }} .sc__num { font-size: {{ s.number_size | times: 0.85 | round }}px; }
+      #{{ el_id }} .sc__unit { min-width: 56px; }
+    }
+  {%- endstyle -%}
+
+  <sale-countdown
+    id="{{ el_id }}"
+    class="sale-countdown"
+    data-uid="{{ uid }}"
+    data-mode="{{ s.mode }}"
+    data-ends-at="{{ ends_at }}"
+    data-hours="{{ s.evergreen_hours }}"
+    data-on-expire="{{ s.on_expire }}"
+  >
+    <div class="sc__inner">
+      {%- if s.heading != blank -%}
+        <h2 class="sc__heading">
+          {%- if s.icon != blank -%}<span class="sc__icon" aria-hidden="true">{{ s.icon | escape }}</span>{%- endif -%}
+          {{ s.heading | escape }}
+        </h2>
+      {%- endif -%}
+
+      {%- if s.subheading != blank -%}
+        <p class="sc__text">{{ s.subheading | escape }}</p>
+      {%- endif -%}
+
+      {%- if missing_date -%}
+        {%- if request.design_mode -%}
+          <p class="sc__note">Bitte im Theme-Editor ein Enddatum im Format JJJJ-MM-TT eintragen (z.&nbsp;B. 2026-12-24).</p>
+        {%- endif -%}
+      {%- else -%}
+        <ul class="sc__timer" data-sc-timer role="timer" aria-live="off" aria-label="{{ s.heading | escape }}">
+          {%- if s.show_days -%}
+            <li class="sc__unit"><span class="sc__num" data-sc-days>00</span><span class="sc__label">{{ s.label_days | escape }}</span></li>
+          {%- endif -%}
+          <li class="sc__unit"><span class="sc__num" data-sc-hours>00</span><span class="sc__label">{{ s.label_hours | escape }}</span></li>
+          <li class="sc__unit"><span class="sc__num" data-sc-minutes>00</span><span class="sc__label">{{ s.label_minutes | escape }}</span></li>
+          {%- if s.show_seconds -%}
+            <li class="sc__unit"><span class="sc__num" data-sc-seconds>00</span><span class="sc__label">{{ s.label_seconds | escape }}</span></li>
+          {%- endif -%}
+        </ul>
+
+        <p class="sc__text" data-sc-expired hidden>{{ s.expired_text | escape }}</p>
+      {%- endif -%}
+
+      {%- if s.button_label != blank -%}
+        <a class="sc__button" href="{{ s.button_link | default: '#' }}">{{ s.button_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </sale-countdown>
+
+  <script>
+    (function () {
+      if (window.customElements && customElements.get('sale-countdown')) return;
+
+      class SaleCountdown extends HTMLElement {
+        connectedCallback() {
+          this.nums = {
+            days: this.querySelector('[data-sc-days]'),
+            hours: this.querySelector('[data-sc-hours]'),
+            minutes: this.querySelector('[data-sc-minutes]'),
+            seconds: this.querySelector('[data-sc-seconds]')
+          };
+          this.timerEl = this.querySelector('[data-sc-timer]');
+          this.expiredEl = this.querySelector('[data-sc-expired]');
+          if (!this.timerEl) return;
+
+          this.endsAt = this.resolveEnd();
+          this.update();
+          this.interval = setInterval(this.update.bind(this), 1000);
+        }
+
+        disconnectedCallback() {
+          clearInterval(this.interval);
+        }
+
+        resolveEnd() {
+          if (this.dataset.mode === 'evergreen') {
+            var key = 'sale-countdown-' + this.dataset.uid;
+            var span = (parseFloat(this.dataset.hours) || 24) * 3600000;
+            var stored = 0;
+            try { stored = parseInt(window.localStorage.getItem(key) || '0', 10); } catch (e) {}
+            if (!stored || isNaN(stored) || stored <= Date.now()) {
+              stored = Date.now() + span;
+              try { window.localStorage.setItem(key, String(stored)); } catch (e) {}
+            }
+            return stored;
+          }
+          var parsed = Date.parse(this.dataset.endsAt || '');
+          return isNaN(parsed) ? 0 : parsed;
+        }
+
+        update() {
+          var diff = this.endsAt - Date.now();
+          if (diff <= 0) {
+            diff = 0;
+            this.finish();
+          }
+          var total = Math.floor(diff / 1000);
+          var days = Math.floor(total / 86400);
+          var hours = Math.floor((total % 86400) / 3600);
+          var minutes = Math.floor((total % 3600) / 60);
+          var seconds = total % 60;
+
+          if (!this.nums.days) {
+            hours += days * 24;
+            days = 0;
+          }
+          if (!this.nums.seconds && seconds > 0) {
+            minutes += 1;
+            if (minutes === 60) { minutes = 0; hours += 1; }
+          }
+
+          this.paint('days', days);
+          this.paint('hours', hours);
+          this.paint('minutes', minutes);
+          this.paint('seconds', seconds);
+        }
+
+        paint(key, value) {
+          var el = this.nums[key];
+          if (!el) return;
+          var text = value < 10 ? '0' + value : String(value);
+          if (el.textContent !== text) el.textContent = text;
+        }
+
+        finish() {
+          if (this.finished) return;
+          this.finished = true;
+          clearInterval(this.interval);
+
+          var editing = window.Shopify && window.Shopify.designMode;
+          if (this.dataset.onExpire === 'hide' && !editing) {
+            this.style.display = 'none';
+            return;
+          }
+          if (this.timerEl) this.timerEl.hidden = true;
+          if (this.expiredEl) this.expiredEl.hidden = false;
+        }
+      }
+
+      customElements.define('sale-countdown', SaleCountdown);
+    })();
+  </script>
+{%- endif -%}
