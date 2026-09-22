@@ -26,13 +26,23 @@
   # 'all' ist die automatische Collection mit allen Produkten.
   assign tab_handles = 'all,blankets,pajamas,shawls' | split: ','
 
-  assign products_limit = 8      # Produkte je Tab
-  assign swatches_visible = 3    # sichtbare Farbfelder, Rest hinter "+N"
-  assign show_arrows = true      # Pfeile links/rechts am Karussell
-  assign show_badge = true       # Rabatt-Badge (-50%)
-  assign cards_desktop = 4       # Karten nebeneinander ab 1024px
-  assign cards_tablet = 3        # ab 750px
-  assign cards_mobile = 1.6      # darunter (1.6 = nächste Karte lugt hervor)
+  # Produkte je Tab
+  assign products_limit = 8
+
+  # Sichtbare Farbfelder, der Rest klappt hinter "+N" auf
+  assign swatches_visible = 3
+
+  # Pfeile links/rechts am Karussell
+  assign show_arrows = true
+
+  # Rabatt-Badge auf dem Bild
+  assign show_badge = true
+
+  # Karten nebeneinander: ab 1024px / ab 750px / darunter
+  # 1.6 bedeutet, dass die naechste Karte am Rand hervorlugt
+  assign cards_desktop = 4
+  assign cards_tablet = 3
+  assign cards_mobile = 1.6
 
   # ========================= AB HIER NICHTS ÄNDERN =========================
 
