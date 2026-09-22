@@ -54,8 +54,8 @@ Zusatzzeile in kleinerer, blasserer Schrift.
 Alternativ pro USP ein **eigenes Icon-Bild** hochladen (PNG/SVG, quadratisch,
 transparenter Hintergrund) — das überschreibt die Dropdown-Auswahl.
 
-Die **Linienstärke** ist global einstellbar (0,8–2,5) und bleibt beim Ändern der
-Icon-Größe gleich dünn — die Icons werden also größer, nicht fetter.
+Die **Linienstärke** ist global wählbar (Sehr dünn bis Sehr kräftig) und bleibt beim
+Ändern der Icon-Größe gleich dünn — die Icons werden also größer, nicht fetter.
 
 ## Wichtigste Einstellungen
 
@@ -63,7 +63,7 @@ Icon-Größe gleich dünn — die Icons werden also größer, nicht fetter.
 |---|---|---|
 | Spalten Desktop / Mobil | 2 / 2 | Bei langen Texten auf Mobil besser 1 Spalte |
 | Icon-Größe | 34 px | |
-| Linienstärke der Icons | 1,3 | |
+| Linienstärke der Icons | Dünn | |
 | Rahmenstärke / Ecken-Radius | 1 px / 8 px | Rahmenstärke 0 = Leiste ohne Rahmen |
 | Abstand Promo-Leiste ↔ USPs | 26 px | |
 | Promo-Leiste anzeigen | an | Aus = nur das USP-Raster |
@@ -93,7 +93,7 @@ direkt unter dem Button (wie im Screenshot) braucht es einen Block in
    ergänzen (Komma zum vorherigen Block nicht vergessen):
 
    ```json
-   {
+{
      "type": "promo_usp",
      "name": "Promo + USPs",
      "settings": [
@@ -360,8 +360,7 @@ direkt unter dem Button (wie im Screenshot) braucht es einen Block in
        },
        {
          "type": "header",
-         "content": "USP-Raster",
-         "info": "Die einzelnen USPs werden unten als Blöcke hinzugefügt."
+         "content": "USP-Raster"
        },
        {
          "type": "range",
@@ -370,7 +369,6 @@ direkt unter dem Button (wie im Screenshot) braucht es einen Block in
          "min": 1,
          "max": 4,
          "step": 1,
-         "unit": "",
          "default": 2
        },
        {
@@ -380,7 +378,6 @@ direkt unter dem Button (wie im Screenshot) braucht es einen Block in
          "min": 1,
          "max": 2,
          "step": 1,
-         "unit": "",
          "default": 2
        },
        {
@@ -394,14 +391,32 @@ direkt unter dem Button (wie im Screenshot) braucht es einen Block in
          "default": 34
        },
        {
-         "type": "range",
+         "type": "select",
          "id": "icon_stroke",
          "label": "Linienstärke der Icons",
-         "min": 0.8,
-         "max": 2.5,
-         "step": 0.1,
-         "unit": "px",
-         "default": 1.3
+         "options": [
+           {
+             "value": "1",
+             "label": "Sehr dünn"
+           },
+           {
+             "value": "1.3",
+             "label": "Dünn"
+           },
+           {
+             "value": "1.6",
+             "label": "Normal"
+           },
+           {
+             "value": "2",
+             "label": "Kräftig"
+           },
+           {
+             "value": "2.5",
+             "label": "Sehr kräftig"
+           }
+         ],
+         "default": "1.3"
        },
        {
          "type": "range",

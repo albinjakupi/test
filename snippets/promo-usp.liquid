@@ -12,7 +12,7 @@
   assign uid = uid | default: 'promo-usp'
   assign el_id = 'PromoUsp-' | append: uid
   assign icon_size = s.icon_size | default: 34
-  assign icon_stroke = s.icon_stroke | default: 1.3
+  assign icon_stroke = s.icon_stroke | default: '1.3'
 
   assign show_promo = false
   if s.show_promo

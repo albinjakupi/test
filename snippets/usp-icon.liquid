@@ -6,7 +6,7 @@
 {%- liquid
   assign name = name | default: 'leaf'
   assign size = size | default: 34
-  assign stroke = stroke | default: 1.3
+  assign stroke = stroke | default: '1.3'
 -%}
 
 {%- unless name == 'none' or name == blank -%}
