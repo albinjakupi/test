@@ -48,6 +48,8 @@ def check(settings, where, problems):
                 problems.append(f"{tag}: (max-min)/step = {steps} ist nicht ganzzahlig")
             if steps > 101:
                 problems.append(f"{tag}: {steps:.0f} Schritte (Shopify erlaubt max. 101)")
+            if steps < 3:
+                problems.append(f"{tag}: nur {steps:.0f} Schritte (Shopify verlangt mindestens 3)")
             if isinstance(st, float) or isinstance(mn, float) or isinstance(mx, float):
                 problems.append(f"{tag}: Dezimalwerte in range — Rundungsrisiko, besser ganzzahlig")
             if df is None:
