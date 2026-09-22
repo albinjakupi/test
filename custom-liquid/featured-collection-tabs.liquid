@@ -1,0 +1,468 @@
+{%- comment -%}
+  ===========================================================================
+  Featured Collection Tabs  —  für einen "Custom Liquid"-Abschnitt
+  ---------------------------------------------------------------------------
+  Einfügen unter: Themes -> Anpassen -> Abschnitt hinzufügen ->
+                  "Benutzerdefiniertes Liquid" -> diesen kompletten Code einfügen
+
+  Nur der Block "EINSTELLUNGEN" unten wird bearbeitet. Alles darunter
+  bleibt unverändert.
+
+  Kein Swiper, kein jQuery, keine externen Dateien — das Karussell läuft
+  über natives CSS-Scroll-Snapping.
+  ===========================================================================
+{%- endcomment -%}
+
+{%- liquid
+  # ============================ EINSTELLUNGEN ==============================
+
+  assign heading = 'Featured Products'
+
+  # Beschriftung der Tabs (Reihenfolge = Reihenfolge der Handles darunter)
+  assign tab_labels = 'All,Blankets,Pajamas,Shawls' | split: ','
+
+  # Collection-Handles dazu. Der Handle steht in der URL der Collection:
+  # /collections/blankets  ->  blankets
+  # 'all' ist die automatische Collection mit allen Produkten.
+  assign tab_handles = 'all,blankets,pajamas,shawls' | split: ','
+
+  assign products_limit = 8      # Produkte je Tab
+  assign swatches_visible = 3    # sichtbare Farbfelder, Rest hinter "+N"
+  assign show_arrows = true      # Pfeile links/rechts am Karussell
+  assign show_badge = true       # Rabatt-Badge (-50%)
+  assign cards_desktop = 4       # Karten nebeneinander ab 1024px
+  assign cards_tablet = 3        # ab 750px
+  assign cards_mobile = 1.6      # darunter (1.6 = nächste Karte lugt hervor)
+
+  # ========================= AB HIER NICHTS ÄNDERN =========================
+
+  assign uid = section.id | default: 'fct1' | replace: '_', '-'
+  assign root = 'fct-' | append: uid
+-%}
+
+<style>
+  #{{ root }} { --fct-gap: 15px; --fct-cards: {{ cards_mobile }}; }
+  #{{ root }} * { box-sizing: border-box; }
+  #{{ root }} .fct__inner { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+
+  #{{ root }} .fct__head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 22px;
+  }
+  #{{ root }} .fct__heading { margin: 0; line-height: 1.1; }
+
+  #{{ root }} .fct__tabs {
+    position: relative; display: flex; gap: 4px; flex-wrap: nowrap;
+    overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  #{{ root }} .fct__tabs::-webkit-scrollbar { display: none; }
+  #{{ root }} .fct__tab {
+    position: relative; flex: 0 0 auto; appearance: none; background: none;
+    border: 0; cursor: pointer; padding: 8px 12px; font: inherit;
+    font-size: 1.4rem; line-height: 1.2; color: rgba(var(--color-foreground, 18 18 18), .6);
+    transition: color .2s ease; white-space: nowrap;
+  }
+  #{{ root }} .fct__tab[aria-selected="true"] { color: rgb(var(--color-foreground, 18 18 18)); font-weight: 600; }
+  #{{ root }} .fct__indicator {
+    position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+    background: rgb(var(--color-foreground, 18 18 18));
+    transform: translateX(0); transition: transform .25s ease, width .25s ease;
+    pointer-events: none;
+  }
+
+  #{{ root }} .fct__panel { position: relative; }
+  #{{ root }} .fct__panel[hidden] { display: none; }
+
+  #{{ root }} .fct__track {
+    display: flex; gap: var(--fct-gap); overflow-x: auto; scroll-behavior: smooth;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch; padding-bottom: 4px;
+  }
+  #{{ root }} .fct__track::-webkit-scrollbar { display: none; }
+  #{{ root }} .fct__card {
+    flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column;
+    width: calc((100% - (var(--fct-cards) - 1) * var(--fct-gap)) / var(--fct-cards));
+  }
+
+  #{{ root }} .fct__media {
+    position: relative; display: block; overflow: hidden; border-radius: 6px;
+    background: rgba(var(--color-foreground, 18 18 18), .04); aspect-ratio: 4 / 5;
+  }
+  #{{ root }} .fct__img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; display: block; transition: opacity .35s ease, transform .6s ease;
+  }
+  #{{ root }} .fct__img--hover { opacity: 0; }
+  #{{ root }} .fct__media:hover .fct__img--hover { opacity: 1; }
+  #{{ root }} .fct__media:hover .fct__img--main { transform: scale(1.03); }
+
+  #{{ root }} .fct__badge {
+    position: absolute; top: 10px; left: 10px; z-index: 2;
+    padding: 4px 8px; border-radius: 999px; font-size: 1.1rem; line-height: 1.4;
+    font-weight: 600; background: rgb(var(--color-foreground, 18 18 18));
+    color: rgb(var(--color-background, 255 255 255));
+  }
+
+  #{{ root }} .fct__info { flex: 1 1 auto; padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  #{{ root }} .fct__title {
+    margin: 0; font-size: 1.4rem; line-height: 1.35; font-weight: 500;
+    color: inherit; text-decoration: none;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  #{{ root }} .fct__title:hover { text-decoration: underline; }
+  #{{ root }} .fct__price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-size: 1.4rem; }
+  #{{ root }} .fct__price s { opacity: .55; }
+  #{{ root }} .fct__price--sale .fct__price-now { color: rgb(var(--color-sale-text, 200 40 40)); font-weight: 600; }
+  #{{ root }} .fct__sold-out { font-size: 1.2rem; opacity: .6; }
+
+  #{{ root }} .fct__swatches { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: auto; padding-top: 8px; }
+  #{{ root }} .fct__swatch {
+    width: 20px; height: 20px; border-radius: 50%; cursor: pointer; padding: 0;
+    border: 1px solid rgba(var(--color-foreground, 18 18 18), .15);
+    background-size: cover; background-position: center; appearance: none;
+  }
+  #{{ root }} .fct__swatch[aria-pressed="true"] {
+    outline: 1px solid rgb(var(--color-foreground, 18 18 18)); outline-offset: 2px;
+  }
+  #{{ root }} .fct__swatch[hidden] { display: none; }
+  #{{ root }} .fct__more {
+    appearance: none; background: none; border: 0; padding: 0 2px; cursor: pointer;
+    font: inherit; font-size: 1.2rem; opacity: .65; text-decoration: underline;
+  }
+
+  #{{ root }} .fct__nav {
+    position: absolute; top: 34%; z-index: 3; width: 36px; height: 36px; border-radius: 50%;
+    display: none; align-items: center; justify-content: center; cursor: pointer;
+    border: 1px solid rgba(var(--color-foreground, 18 18 18), .12);
+    background: rgb(var(--color-background, 255 255 255));
+    box-shadow: 0 2px 8px rgba(0,0,0,.08); transition: opacity .2s ease;
+  }
+  #{{ root }} .fct__nav svg { width: 15px; height: 15px; }
+  #{{ root }} .fct__nav--prev { left: 6px; }
+  #{{ root }} .fct__nav--next { right: 6px; }
+  #{{ root }} .fct__nav[disabled] { opacity: .25; cursor: default; }
+  #{{ root }} .fct__empty { padding: 28px 0; opacity: .6; font-size: 1.4rem; }
+
+  @media screen and (min-width: 750px) {
+    #{{ root }} { --fct-cards: {{ cards_tablet }}; }
+    #{{ root }} .fct__tab { font-size: 1.5rem; padding: 8px 14px; }
+  }
+  @media screen and (min-width: 1024px) {
+    #{{ root }} { --fct-cards: {{ cards_desktop }}; }
+    {% if show_arrows %}#{{ root }} .fct__nav { display: flex; }{% endif %}
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #{{ root }} .fct__track { scroll-behavior: auto; }
+    #{{ root }} .fct__img, #{{ root }} .fct__indicator { transition: none; }
+  }
+</style>
+
+<div id="{{ root }}" class="fct section--padding">
+  <div class="fct__inner">
+
+    <div class="fct__head">
+      {%- if heading != blank -%}
+        <h2 class="fct__heading title h1">{{ heading | escape }}</h2>
+      {%- endif -%}
+
+      <div class="fct__tabs" role="tablist">
+        {%- for label in tab_labels -%}
+          {%- assign panel_id = root | append: '-panel-' | append: forloop.index -%}
+          <button
+            type="button"
+            class="fct__tab"
+            role="tab"
+            id="{{ root }}-tab-{{ forloop.index }}"
+            aria-controls="{{ panel_id }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          >{{ label | strip | escape }}</button>
+        {%- endfor -%}
+        <span class="fct__indicator" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="fct__panels">
+      {%- for handle in tab_handles -%}
+        {%- liquid
+          assign coll_handle = handle | strip
+          assign coll = collections[coll_handle]
+          assign panel_id = root | append: '-panel-' | append: forloop.index
+          assign tab_id = root | append: '-tab-' | append: forloop.index
+          assign is_first = forloop.first
+        -%}
+
+        <div
+          class="fct__panel"
+          id="{{ panel_id }}"
+          role="tabpanel"
+          aria-labelledby="{{ tab_id }}"
+          {% unless is_first %}hidden{% endunless %}
+        >
+          {%- if coll.products.size == 0 -%}
+            <p class="fct__empty">
+              Keine Produkte in der Collection „{{ coll_handle }}“.
+              {%- if request.design_mode %} Handle im Code prüfen.{% endif -%}
+            </p>
+          {%- else -%}
+
+            {%- if show_arrows -%}
+              <button type="button" class="fct__nav fct__nav--prev" aria-label="Zurück">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+              </button>
+              <button type="button" class="fct__nav fct__nav--next" aria-label="Weiter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+              </button>
+            {%- endif -%}
+
+            <div class="fct__track">
+              {%- for product in coll.products limit: products_limit -%}
+                {%- liquid
+                  assign on_sale = false
+                  assign pct = 0
+                  if product.compare_at_price_max > product.price_min
+                    assign on_sale = true
+                    assign pct = product.compare_at_price_max | minus: product.price_min | times: 100.0 | divided_by: product.compare_at_price_max | round
+                  endif
+
+                  assign main_image = product.featured_image
+                  assign hover_image = product.images[1]
+
+                  assign color_opt = nil
+                  for opt in product.options_with_values
+                    assign opt_name = opt.name | downcase
+                    if opt_name contains 'color' or opt_name contains 'colour' or opt_name contains 'farbe'
+                      assign color_opt = opt
+                      break
+                    endif
+                  endfor
+                -%}
+
+                <div class="fct__card" data-fct-card>
+                  <a class="fct__media" href="{{ product.url }}" data-fct-link tabindex="-1" aria-hidden="true">
+                    {%- if show_badge and on_sale -%}
+                      <span class="fct__badge">&ndash;{{ pct }}%</span>
+                    {%- endif -%}
+
+                    {%- if main_image -%}
+                      <img
+                        class="fct__img fct__img--main"
+                        src="{{ main_image | image_url: width: 600 }}"
+                        srcset="{{ main_image | image_url: width: 240 }} 240w, {{ main_image | image_url: width: 360 }} 360w, {{ main_image | image_url: width: 480 }} 480w, {{ main_image | image_url: width: 600 }} 600w"
+                        sizes="(min-width: 1024px) 25vw, (min-width: 750px) 33vw, 62vw"
+                        width="{{ main_image.width }}"
+                        height="{{ main_image.height }}"
+                        alt="{{ product.title | escape }}"
+                        loading="lazy"
+                        data-fct-main
+                      >
+                    {%- else -%}
+                      <span class="fct__img fct__img--main"></span>
+                    {%- endif -%}
+
+                    {%- if hover_image -%}
+                      <img
+                        class="fct__img fct__img--hover"
+                        src="{{ hover_image | image_url: width: 600 }}"
+                        srcset="{{ hover_image | image_url: width: 240 }} 240w, {{ hover_image | image_url: width: 360 }} 360w, {{ hover_image | image_url: width: 480 }} 480w, {{ hover_image | image_url: width: 600 }} 600w"
+                        sizes="(min-width: 1024px) 25vw, (min-width: 750px) 33vw, 62vw"
+                        width="{{ hover_image.width }}"
+                        height="{{ hover_image.height }}"
+                        alt=""
+                        loading="lazy"
+                        aria-hidden="true"
+                      >
+                    {%- endif -%}
+                  </a>
+
+                  <div class="fct__info">
+                    <a class="fct__title" href="{{ product.url }}" data-fct-link>{{ product.title | escape }}</a>
+
+                    <div class="fct__price{% if on_sale %} fct__price--sale{% endif %}" data-fct-price>
+                      {%- if on_sale -%}
+                        <s data-fct-was>{{ product.compare_at_price_max | money }}</s>
+                      {%- endif -%}
+                      <span class="fct__price-now" data-fct-now>{{ product.price_min | money }}</span>
+                      {%- unless product.available -%}
+                        <span class="fct__sold-out">Ausverkauft</span>
+                      {%- endunless -%}
+                    </div>
+
+                    {%- if color_opt and color_opt.values.size > 1 -%}
+                      <div class="fct__swatches">
+                        {%- for value in color_opt.values -%}
+                          {%- liquid
+                            assign v = value.variant
+                            assign v_img = v.featured_image | default: product.featured_image
+                            assign v_url = value.product_url | default: product.url
+                            assign sw = value.swatch
+                            assign style = ''
+                            if sw.image
+                              assign sw_url = sw.image | image_url: width: 80
+                              assign style = 'background-image:url(' | append: sw_url | append: ')'
+                            elsif sw.color
+                              assign style = 'background:' | append: sw.color
+                            elsif v_img
+                              assign sw_url = v_img | image_url: width: 80
+                              assign style = 'background-image:url(' | append: sw_url | append: ')'
+                            endif
+                            if v_img
+                              assign big_url = v_img | image_url: width: 600
+                            else
+                              assign big_url = ''
+                            endif
+                            assign hidden = false
+                            if forloop.index > swatches_visible
+                              assign hidden = true
+                            endif
+                          -%}
+                          <button
+                            type="button"
+                            class="fct__swatch"
+                            style="{{ style }}"
+                            title="{{ value.name | escape }}"
+                            aria-label="{{ value.name | escape }}"
+                            aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                            data-fct-swatch
+                            data-img="{{ big_url }}"
+                            data-url="{{ v_url }}"
+                            data-price="{{ v.price | default: product.price_min | money }}"
+                            data-was="{{ v.compare_at_price | money }}"
+                            {% if hidden %}hidden{% endif %}
+                          ></button>
+                        {%- endfor -%}
+
+                        {%- assign rest = color_opt.values.size | minus: swatches_visible -%}
+                        {%- if rest > 0 -%}
+                          <button type="button" class="fct__more" data-fct-more>+{{ rest }}</button>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById({{ root | json }});
+    if (!root || root.dataset.fctReady) return;
+    root.dataset.fctReady = '1';
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('.fct__tab'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.fct__panel'));
+    var indicator = root.querySelector('.fct__indicator');
+
+    function moveIndicator(tab) {
+      if (!indicator || !tab) return;
+      indicator.style.width = tab.offsetWidth + 'px';
+      indicator.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
+    }
+
+    function select(index) {
+      tabs.forEach(function (tab, i) {
+        tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      });
+      panels.forEach(function (panel, i) {
+        panel.hidden = i !== index;
+      });
+      moveIndicator(tabs[index]);
+      updateAllNav();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(i); });
+      tab.addEventListener('keydown', function (event) {
+        var next = null;
+        if (event.key === 'ArrowRight') next = (i + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+        if (next === null) return;
+        event.preventDefault();
+        tabs[next].focus();
+        select(next);
+      });
+    });
+
+    // Farbfelder: Bild, Link und Preis der Karte umstellen
+    root.addEventListener('click', function (event) {
+      var swatch = event.target.closest('[data-fct-swatch]');
+      if (swatch) {
+        var card = swatch.closest('[data-fct-card]');
+        if (!card) return;
+        card.querySelectorAll('[data-fct-swatch]').forEach(function (other) {
+          other.setAttribute('aria-pressed', other === swatch ? 'true' : 'false');
+        });
+        var img = card.querySelector('[data-fct-main]');
+        if (img && swatch.dataset.img) {
+          img.removeAttribute('srcset');
+          img.src = swatch.dataset.img;
+        }
+        if (swatch.dataset.url) {
+          card.querySelectorAll('[data-fct-link]').forEach(function (link) {
+            link.href = swatch.dataset.url;
+          });
+        }
+        var now = card.querySelector('[data-fct-now]');
+        if (now && swatch.dataset.price) now.textContent = swatch.dataset.price;
+        var was = card.querySelector('[data-fct-was]');
+        if (was && swatch.dataset.was) was.textContent = swatch.dataset.was;
+        return;
+      }
+
+      var more = event.target.closest('[data-fct-more]');
+      if (more) {
+        var wrap = more.parentElement;
+        wrap.querySelectorAll('[data-fct-swatch][hidden]').forEach(function (s) { s.hidden = false; });
+        more.remove();
+      }
+    });
+
+    // Karussell-Pfeile
+    var tracks = Array.prototype.slice.call(root.querySelectorAll('.fct__track'));
+
+    function syncNav(track) {
+      var panel = track.closest('.fct__panel');
+      if (!panel) return;
+      var prev = panel.querySelector('.fct__nav--prev');
+      var next = panel.querySelector('.fct__nav--next');
+      var max = track.scrollWidth - track.clientWidth - 2;
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max;
+    }
+
+    function updateAllNav() { tracks.forEach(syncNav); }
+
+    tracks.forEach(function (track) {
+      var panel = track.closest('.fct__panel');
+      var card = track.querySelector('.fct__card');
+
+      function step(direction) {
+        var width = card ? card.offsetWidth + 15 : track.clientWidth;
+        track.scrollBy({ left: direction * width, behavior: 'smooth' });
+      }
+
+      var prev = panel && panel.querySelector('.fct__nav--prev');
+      var next = panel && panel.querySelector('.fct__nav--next');
+      if (prev) prev.addEventListener('click', function () { step(-1); });
+      if (next) next.addEventListener('click', function () { step(1); });
+
+      track.addEventListener('scroll', function () { syncNav(track); }, { passive: true });
+    });
+
+    window.addEventListener('resize', function () {
+      moveIndicator(root.querySelector('.fct__tab[aria-selected="true"]'));
+      updateAllNav();
+    });
+
+    moveIndicator(tabs[0]);
+    updateAllNav();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { moveIndicator(root.querySelector('.fct__tab[aria-selected="true"]')); });
+    }
+  })();
+</script>
